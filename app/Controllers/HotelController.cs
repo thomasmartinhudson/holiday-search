@@ -19,12 +19,12 @@ namespace HolidaySearch.Controllers
 
     public class HotelMatchingController
     {
-        public Hotel[] GetMatchingHotels(Hotel[] hotels, string[] travelingTo, DateOnly departureDate, int duration)
+        public static Hotel[] GetMatchingHotels(Hotel[] hotels, string[] travelingTo, DateOnly departureDate, int duration)
         {
-            return hotels.Where(h =>
+            return [.. hotels.Where(h =>
                 (travelingTo.Length == 0 || h.LocalAirports.Any(airport => travelingTo.Contains(airport))) &&
                 h.ArrivalDate == departureDate &&
-                h.Nights == duration).ToArray();
+                h.Nights == duration)];
         }
     }
 }

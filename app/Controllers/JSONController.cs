@@ -2,14 +2,15 @@ using System.Text.Json;
 
 namespace HolidaySearch.Controllers
 {
-    public class JSONController
+    public class JSONController(string dataPath)
     {
-        private readonly string _dataPath;
-
-        public JSONController(string dataPath)
+        private static readonly JsonSerializerOptions JsonOptions = new()
         {
-            _dataPath = dataPath;
-        }
+            PropertyNameCaseInsensitive = true,
+            PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower
+        };
+
+        private readonly string _dataPath = dataPath;
 
         public T[] ReadAll<T>()
         {
@@ -21,13 +22,7 @@ namespace HolidaySearch.Controllers
             try
             {
                 var jsonContent = File.ReadAllText(_dataPath);
-                var options = new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true,
-                    PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower
-                };
-
-                var items = JsonSerializer.Deserialize<T[]>(jsonContent, options);
+                var items = JsonSerializer.Deserialize<T[]>(jsonContent, JsonOptions);
 
                 return items ?? [];
             }
@@ -51,13 +46,7 @@ namespace HolidaySearch.Controllers
             try
             {
                 var jsonContent = File.ReadAllText(_dataPath);
-                var options = new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true,
-                    PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower
-                };
-
-                var item = JsonSerializer.Deserialize<T>(jsonContent, options);
+                var item = JsonSerializer.Deserialize<T>(jsonContent, JsonOptions);
 
                 if (item == null)
                 {

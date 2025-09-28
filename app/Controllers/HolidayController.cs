@@ -4,7 +4,7 @@ namespace HolidaySearch.Controllers
 {
     public class HolidaySearchController
     {
-        public HolidayResult[] GetHolidayResults(Flight[] matchingFlights, Hotel[] matchingHotels)
+        public static HolidayResult[] GetHolidayResults(Flight[] matchingFlights, Hotel[] matchingHotels)
         {
             if (matchingFlights.Length == 0 || matchingHotels.Length == 0)
             {
@@ -26,7 +26,7 @@ namespace HolidaySearch.Controllers
                 }
             }
 
-            return results.OrderBy(r => r.TotalPrice).ToArray();
+            return [.. results.OrderBy(r => r.TotalPrice)];
         }
 
     }

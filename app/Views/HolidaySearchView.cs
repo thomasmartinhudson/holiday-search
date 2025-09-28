@@ -6,18 +6,14 @@ namespace HolidaySearch.Views
     public class HolidaySearch
     {
         private readonly HotelDataController _hotelDataController;
-        private readonly HotelMatchingController _hotelMatchingController;
         private readonly AirportDataController _airportDataController;
         private readonly FlightDataController _flightDataController;
-        private readonly HolidaySearchController _holidaySearchController;
 
         public HolidaySearch()
         {
             _hotelDataController = new HotelDataController();
-            _hotelMatchingController = new HotelMatchingController();
             _airportDataController = new AirportDataController();
             _flightDataController = new FlightDataController();
-            _holidaySearchController = new HolidaySearchController();
         }
 
         public HolidayResult[] Search(Models.HolidaySearch searchCriteria)
@@ -55,7 +51,7 @@ namespace HolidaySearch.Views
 
             // Step 6: Get matching hotels from HotelMatchingController
             var destinationCodes = AirportReferenceController.GetAirportCodes(searchCriteria.TravelingTo, allAirports);
-            var matchingHotels = _hotelMatchingController.GetMatchingHotels(
+            var matchingHotels = HotelMatchingController.GetMatchingHotels(
                 allHotels,
                 destinationCodes,
                 searchCriteria.DepartureDate,
@@ -67,7 +63,7 @@ namespace HolidaySearch.Views
             }
 
             // Step 7: Get holiday results using HolidaySearchController
-            var holidayResults = _holidaySearchController.GetHolidayResults(matchingFlights, matchingHotels);
+            var holidayResults = HolidaySearchController.GetHolidayResults(matchingFlights, matchingHotels);
 
             return holidayResults;
         }

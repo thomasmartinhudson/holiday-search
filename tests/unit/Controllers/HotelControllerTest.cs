@@ -121,7 +121,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
             var controller = new HotelMatchingController();
 
             // Act
-            var result = controller.GetMatchingHotels(_testHotels, [], new DateOnly(2023, 7, 1), 7);
+            var result = HotelMatchingController.GetMatchingHotels(_testHotels, [], new DateOnly(2023, 7, 1), 7);
 
             // Assert
             Assert.Equal(2, result.Length);
@@ -136,7 +136,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
             var controller = new HotelMatchingController();
 
             // Act
-            var result = controller.GetMatchingHotels(_testHotels, new string[] { "AGP" }, new DateOnly(2023, 7, 1), 7);
+            var result = HotelMatchingController.GetMatchingHotels(_testHotels, new string[] { "AGP" }, new DateOnly(2023, 7, 1), 7);
 
             // Assert
             Assert.Single(result);
@@ -151,7 +151,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
             var controller = new HotelMatchingController();
 
             // Act
-            var result = controller.GetMatchingHotels(_testHotels, [], new DateOnly(2023, 7, 1), 7);
+            var result = HotelMatchingController.GetMatchingHotels(_testHotels, [], new DateOnly(2023, 7, 1), 7);
 
             // Assert
             Assert.Equal(2, result.Length);
@@ -165,7 +165,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
             var controller = new HotelMatchingController();
 
             // Act
-            var result = controller.GetMatchingHotels(_testHotels, [], new DateOnly(2023, 7, 1), 7);
+            var result = HotelMatchingController.GetMatchingHotels(_testHotels, [], new DateOnly(2023, 7, 1), 7);
 
             // Assert
             Assert.Equal(2, result.Length);
@@ -179,7 +179,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
             var controller = new HotelMatchingController();
 
             // Act
-            var result = controller.GetMatchingHotels(_testHotels, new string[] { "INVALID" }, new DateOnly(2023, 12, 31), 30);
+            var result = HotelMatchingController.GetMatchingHotels(_testHotels, new string[] { "INVALID" }, new DateOnly(2023, 12, 31), 30);
 
             // Assert
             Assert.Empty(result);
@@ -192,7 +192,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
             var controller = new HotelMatchingController();
 
             // Act
-            var result = controller.GetMatchingHotels(_testHotels, new string[] { "MAN", "LGW" }, new DateOnly(2023, 7, 1), 7);
+            var result = HotelMatchingController.GetMatchingHotels(_testHotels, new string[] { "MAN", "LGW" }, new DateOnly(2023, 7, 1), 7);
 
             // Assert
             Assert.Single(result);
@@ -206,7 +206,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
             var controller = new HotelMatchingController();
 
             // Act
-            var result = controller.GetMatchingHotels(_testHotels, new string[] { "AGP" }, new DateOnly(2023, 7, 1), 7);
+            var result = HotelMatchingController.GetMatchingHotels(_testHotels, new string[] { "AGP" }, new DateOnly(2023, 7, 1), 7);
 
             // Assert
             Assert.Single(result);
@@ -223,7 +223,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
             var controller = new HotelMatchingController();
 
             // Act
-            var result = controller.GetMatchingHotels(_testHotels, new string[] { "AGP" }, new DateOnly(2023, 12, 31), 7);
+            var result = HotelMatchingController.GetMatchingHotels(_testHotels, new string[] { "AGP" }, new DateOnly(2023, 12, 31), 7);
 
             // Assert
             Assert.Empty(result);
@@ -236,7 +236,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
             var controller = new HotelMatchingController();
 
             // Act
-            var result = controller.GetMatchingHotels(_testHotels, new string[] { "AGP" }, new DateOnly(2023, 7, 1), 30);
+            var result = HotelMatchingController.GetMatchingHotels(_testHotels, new string[] { "AGP" }, new DateOnly(2023, 7, 1), 30);
 
             // Assert
             Assert.Empty(result);
@@ -249,7 +249,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
             var controller = new HotelMatchingController();
 
             // Act
-            var result = controller.GetMatchingHotels(_testHotels, new string[] { "INVALID" }, new DateOnly(2023, 7, 1), 7);
+            var result = HotelMatchingController.GetMatchingHotels(_testHotels, new string[] { "INVALID" }, new DateOnly(2023, 7, 1), 7);
 
             // Assert
             Assert.Empty(result);
@@ -262,7 +262,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
             var controller = new HotelMatchingController();
 
             // Act
-            var result = controller.GetMatchingHotels(_testHotels, new string[] { "LGW" }, new DateOnly(2023, 7, 1), 7);
+            var result = HotelMatchingController.GetMatchingHotels(_testHotels, new string[] { "LGW" }, new DateOnly(2023, 7, 1), 7);
 
             // Assert
             Assert.Single(result);
@@ -277,7 +277,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
             var controller = new HotelMatchingController();
 
             // Act
-            var result = controller.GetMatchingHotels(_testHotels, new string[] { "MAN" }, new DateOnly(2023, 8, 15), 14);
+            var result = HotelMatchingController.GetMatchingHotels(_testHotels, new string[] { "MAN" }, new DateOnly(2023, 8, 15), 14);
 
             // Assert
             Assert.Single(result);

@@ -38,7 +38,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
             var hotels = _testHotels.Take(1).ToArray();
 
             // Act
-            var result = controller.GetHolidayResults(emptyFlights, hotels);
+            var result = HolidaySearchController.GetHolidayResults(emptyFlights, hotels);
 
             // Assert
             Assert.Empty(result);
@@ -53,7 +53,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
             var emptyHotels = new Hotel[0];
 
             // Act
-            var result = controller.GetHolidayResults(flights, emptyHotels);
+            var result = HolidaySearchController.GetHolidayResults(flights, emptyHotels);
 
             // Assert
             Assert.Empty(result);
@@ -68,7 +68,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
             var emptyHotels = new Hotel[0];
 
             // Act
-            var result = controller.GetHolidayResults(emptyFlights, emptyHotels);
+            var result = HolidaySearchController.GetHolidayResults(emptyFlights, emptyHotels);
 
             // Assert
             Assert.Empty(result);
@@ -83,7 +83,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
             var singleHotel = _testHotels.Take(1).ToArray();
 
             // Act
-            var result = controller.GetHolidayResults(singleFlight, singleHotel);
+            var result = HolidaySearchController.GetHolidayResults(singleFlight, singleHotel);
 
             // Assert
             Assert.Single(result);
@@ -102,7 +102,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
             var hotels = _testHotels.Take(2).ToArray();
 
             // Act
-            var result = controller.GetHolidayResults(flights, hotels);
+            var result = HolidaySearchController.GetHolidayResults(flights, hotels);
 
             // Assert
             Assert.Equal(4, result.Length); // 2 flights × 2 hotels = 4 combinations
@@ -117,7 +117,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
             var hotels = _testHotels.Take(2).ToArray();
 
             // Act
-            var result = controller.GetHolidayResults(flights, hotels);
+            var result = HolidaySearchController.GetHolidayResults(flights, hotels);
 
             // Assert
             Assert.Equal(4, result.Length);
@@ -139,7 +139,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
             var hotels = _testHotels.Take(2).ToArray(); // Hotel 1: £50/night, Hotel 2: £75/night
 
             // Act
-            var result = controller.GetHolidayResults(flights, hotels);
+            var result = HolidaySearchController.GetHolidayResults(flights, hotels);
 
             // Assert
             Assert.Equal(4, result.Length);
@@ -165,7 +165,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
             var singleHotel = _testHotels.Take(1).ToArray(); // £50/night for 7 nights = £350
 
             // Act
-            var result = controller.GetHolidayResults(singleFlight, singleHotel);
+            var result = HolidaySearchController.GetHolidayResults(singleFlight, singleHotel);
 
             // Assert
             Assert.Single(result);
@@ -186,7 +186,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
             var singleHotel = _testHotels.Take(1).ToArray();
 
             // Act
-            var result = controller.GetHolidayResults(flights, singleHotel);
+            var result = HolidaySearchController.GetHolidayResults(flights, singleHotel);
 
             // Assert
             Assert.Equal(2, result.Length);
@@ -206,7 +206,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
             };
 
             // Act
-            var result = controller.GetHolidayResults(singleFlight, hotels);
+            var result = HolidaySearchController.GetHolidayResults(singleFlight, hotels);
 
             // Assert
             Assert.Equal(2, result.Length);
@@ -222,7 +222,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
             var singleHotel = _testHotels.Take(1).ToArray();
 
             // Act
-            var result = controller.GetHolidayResults(singleFlight, singleHotel);
+            var result = HolidaySearchController.GetHolidayResults(singleFlight, singleHotel);
 
             // Assert
             Assert.Single(result);
@@ -254,7 +254,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
             var hotels = _testHotels; // 3 hotels
 
             // Act
-            var result = controller.GetHolidayResults(flights, hotels);
+            var result = HolidaySearchController.GetHolidayResults(flights, hotels);
 
             // Assert
             Assert.Equal(9, result.Length); // 3 flights × 3 hotels = 9 combinations
@@ -277,7 +277,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
             };
 
             // Act
-            var result = controller.GetHolidayResults(flights, hotels);
+            var result = HolidaySearchController.GetHolidayResults(flights, hotels);
 
             // Assert
             Assert.Equal(4, result.Length);

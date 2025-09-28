@@ -2,11 +2,11 @@ using HolidaySearch.Models;
 
 namespace HolidaySearch.Controllers
 {
-    public class FlightController
+    public class FlightDataController
     {
         private readonly JSONController _jsonController;
 
-        public FlightController(string dataPath = "data/flights.json")
+        public FlightDataController(string dataPath = "data/flights.json")
         {
             _jsonController = new JSONController(dataPath);
         }

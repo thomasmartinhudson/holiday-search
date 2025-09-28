@@ -8,7 +8,7 @@ using HolidaySearch.Models;
 
 namespace HolidaySearch.Tests.Unit.Controllers
 {
-    public class HotelControllerTest
+    public class HotelDataControllerTest
     {
         [Fact]
         public void GetAllHotels_ShouldReturnAllHotels_WhenValidDataFile()
@@ -37,7 +37,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
 
             try
             {
-                var controller = new HotelController(tempFile);
+                var controller = new HotelDataController(tempFile);
 
                 // Act
                 var hotels = controller.GetAllHotels();
@@ -86,7 +86,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
 
             try
             {
-                var controller = new HotelController(tempFile);
+                var controller = new HotelDataController(tempFile);
 
                 // Act & Assert
                 var exception = Assert.Throws<InvalidOperationException>(() => controller.GetAllHotels());

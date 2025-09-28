@@ -8,7 +8,7 @@ using HolidaySearch.Models;
 
 namespace HolidaySearch.Tests.Unit.Controllers
 {
-    public class AirportControllerTest
+    public class AirportDataControllerTest
     {
         [Fact]
         public void GetAllAirports_ShouldReturnAllAirports_WhenValidDataFile()
@@ -33,7 +33,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
 
             try
             {
-                var controller = new AirportController(tempFile);
+                var controller = new AirportDataController(tempFile);
 
                 // Act
                 var airports = controller.GetAllAirports();
@@ -76,7 +76,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
 
             try
             {
-                var controller = new AirportController(tempFile);
+                var controller = new AirportDataController(tempFile);
 
                 // Act & Assert
                 var exception = Assert.Throws<InvalidOperationException>(() => controller.GetAllAirports());

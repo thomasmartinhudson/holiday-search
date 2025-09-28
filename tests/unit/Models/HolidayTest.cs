@@ -128,5 +128,42 @@ namespace HolidaySearch.Tests.Unit.Models
             Assert.Null(holidaySearch.DepartingFrom);
             Assert.Null(holidaySearch.TravelingTo);
         }
+
+        [Fact]
+        public void HolidaySearch_ShouldThrowArgumentException_WhenDurationIsZero()
+        {
+            // Arrange & Act & Assert
+            var exception = Assert.Throws<ArgumentException>(() =>
+            {
+                var holidaySearch = new HolidaySearch.Models.HolidaySearch
+                {
+                    DepartingFrom = "MAN",
+                    TravelingTo = "AGP",
+                    DepartureDate = new DateOnly(2023, 7, 1),
+                    Duration = 0
+                };
+            });
+
+            Assert.Equal("Duration must be greater than 0 (Parameter 'value')", exception.Message);
+        }
+
+        [Fact]
+        public void HolidaySearch_ShouldThrowArgumentException_WhenDurationIsNegative()
+        {
+            // Arrange & Act & Assert
+            var exception = Assert.Throws<ArgumentException>(() =>
+            {
+                var holidaySearch = new HolidaySearch.Models.HolidaySearch
+                {
+                    DepartingFrom = "MAN",
+                    TravelingTo = "AGP",
+                    DepartureDate = new DateOnly(2023, 7, 1),
+                    Duration = -5
+                };
+            });
+
+            Assert.Equal("Duration must be greater than 0 (Parameter 'value')", exception.Message);
+        }
+
     }
 }

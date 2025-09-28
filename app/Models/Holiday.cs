@@ -7,7 +7,18 @@ namespace HolidaySearch.Models
         public string? DepartingFrom { get; set; }
         public string? TravelingTo { get; set; }
         public DateOnly DepartureDate { get; set; }
-        public int Duration { get; set; }
+        
+        private int _duration;
+        public int Duration 
+        { 
+            get => _duration;
+            set
+            {
+                if (value <= 0)
+                    throw new ArgumentException("Duration must be greater than 0", nameof(value));
+                _duration = value;
+            }
+        }
     }
 
     public class HolidayResult

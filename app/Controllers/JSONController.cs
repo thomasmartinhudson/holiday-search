@@ -48,12 +48,7 @@ namespace HolidaySearch.Controllers
                 var jsonContent = File.ReadAllText(_dataPath);
                 var item = JsonSerializer.Deserialize<T>(jsonContent, JsonOptions);
 
-                if (item == null)
-                {
-                    throw new InvalidOperationException($"Failed to deserialize data from {_dataPath}");
-                }
-
-                return item;
+                return item ?? throw new InvalidOperationException($"Failed to deserialize data from {_dataPath}");
             }
             catch (JsonException ex)
             {

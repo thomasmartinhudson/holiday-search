@@ -4,15 +4,15 @@ namespace HolidaySearch.Controllers
 {
     public class HolidaySearchController
     {
-        public List<HolidayResult> GetHolidayResults(List<Flight> matchingFlights, List<Hotel> matchingHotels)
+        public HolidayResult[] GetHolidayResults(Flight[] matchingFlights, Hotel[] matchingHotels)
         {
-            if (matchingFlights.Count == 0 || matchingHotels.Count == 0)
+            if (matchingFlights.Length == 0 || matchingHotels.Length == 0)
             {
-                return new List<HolidayResult>();
+                return [];
             }
 
             // Create holiday combinations
-            var results = new List<HolidayResult>(matchingFlights.Count * matchingHotels.Count);
+            var results = new List<HolidayResult>(matchingFlights.Length * matchingHotels.Length);
             foreach (var flight in matchingFlights)
             {
                 foreach (var hotel in matchingHotels)
@@ -26,7 +26,7 @@ namespace HolidaySearch.Controllers
                 }
             }
 
-            return results.OrderBy(r => r.TotalPrice).ToList();
+            return results.OrderBy(r => r.TotalPrice).ToArray();
         }
 
     }

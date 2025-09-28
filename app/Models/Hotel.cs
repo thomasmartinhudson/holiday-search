@@ -27,7 +27,7 @@ namespace HolidaySearch.Models
         }
 
         [JsonPropertyName("local_airports")]
-        public required List<string> LocalAirports { get; set; } = new();
+        public required string[] LocalAirports { get; set; } = [];
 
         private int _nights;
 

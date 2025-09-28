@@ -6,7 +6,7 @@ namespace HolidaySearch.Controllers
     {
         private readonly JSONController _jsonController = new(dataPath);
 
-        public List<Airport> GetAllAirports()
+        public Airport[] GetAllAirports()
         {
             return _jsonController.ReadAll<Airport>();
         }
@@ -14,7 +14,7 @@ namespace HolidaySearch.Controllers
 
     public class AirportReferenceController
     {
-        public static List<string> GetAirportCodes(string? location, List<Airport> airports)
+        public static string[] GetAirportCodes(string? location, Airport[] airports)
         {
             // If no location is provided, return all airport codes (null == "Any")
             if (string.IsNullOrEmpty(location))
@@ -31,9 +31,9 @@ namespace HolidaySearch.Controllers
                 a.City.Equals(location, StringComparison.OrdinalIgnoreCase) ||
                 a.Name.Contains(location, StringComparison.OrdinalIgnoreCase))
                 .Select(a => a.Code)
-                .ToList();
+                .ToArray();
 
-            if (cityMatches.Count > 0)
+            if (cityMatches.Length > 0)
                 return cityMatches;
 
             return [];

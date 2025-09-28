@@ -224,10 +224,10 @@ namespace HolidaySearch.Tests.E2E
 
             // Assert
             Assert.NotEmpty(results);
-            Assert.True(results.Count > 1, "Should return multiple options for this search");
+            Assert.True(results.Length > 1, "Should return multiple options for this search");
 
             // Verify results are ordered by total price (cheapest first)
-            for (int i = 1; i < results.Count; i++)
+            for (int i = 1; i < results.Length; i++)
             {
                 Assert.True(results[i - 1].TotalPrice <= results[i].TotalPrice,
                     $"Results not ordered by price: {results[i - 1].TotalPrice} > {results[i].TotalPrice}");

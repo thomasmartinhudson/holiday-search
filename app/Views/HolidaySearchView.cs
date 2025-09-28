@@ -9,7 +9,6 @@ namespace HolidaySearch.Views
         private readonly HotelMatchingController _hotelMatchingController;
         private readonly AirportDataController _airportDataController;
         private readonly FlightDataController _flightDataController;
-        private readonly FlightMatchingController _flightMatchingController;
         private readonly HolidaySearchController _holidaySearchController;
 
         public HolidaySearch()
@@ -18,11 +17,10 @@ namespace HolidaySearch.Views
             _hotelMatchingController = new HotelMatchingController();
             _airportDataController = new AirportDataController();
             _flightDataController = new FlightDataController();
-            _flightMatchingController = new FlightMatchingController();
             _holidaySearchController = new HolidaySearchController();
         }
 
-        public List<HolidayResult> Search(Models.HolidaySearch searchCriteria)
+        public HolidayResult[] Search(Models.HolidaySearch searchCriteria)
         {
             // Step 1: Read all Airport data from the data directory
             var allAirports = _airportDataController.GetAllAirports();
@@ -31,25 +29,25 @@ namespace HolidaySearch.Views
             var departingFromCodes = AirportReferenceController.GetAirportCodes(searchCriteria.DepartingFrom, allAirports);
             var travelingToCodes = AirportReferenceController.GetAirportCodes(searchCriteria.TravelingTo, allAirports);
 
-            if (departingFromCodes.Count == 0 || travelingToCodes.Count == 0)
+            if (departingFromCodes.Length == 0 || travelingToCodes.Length == 0)
             {
-                return new List<HolidayResult>();
+                return [];
             }
 
             // Step 3: Read all Flight data from the data directory
             var allFlights = _flightDataController.GetAllFlights();
 
             // Step 4: Get matching flights using FlightMatchingController
-            var matchingFlights = _flightMatchingController.GetMatchingFlights(
+            var matchingFlights = FlightMatchingController.GetMatchingFlights(
                 allFlights,
                 departingFromCodes,
                 travelingToCodes,
                 searchCriteria.DepartureDate
             );
 
-            if (matchingFlights.Count == 0)
+            if (matchingFlights.Length == 0)
             {
-                return new List<HolidayResult>();
+                return [];
             }
 
             // Step 5: Read all Hotel data from the data directory
@@ -63,9 +61,9 @@ namespace HolidaySearch.Views
                 searchCriteria.DepartureDate,
                 searchCriteria.Duration
             );
-            if (matchingHotels.Count == 0)
+            if (matchingHotels.Length == 0)
             {
-                return new List<HolidayResult>();
+                return [];
             }
 
             // Step 7: Get holiday results using HolidaySearchController

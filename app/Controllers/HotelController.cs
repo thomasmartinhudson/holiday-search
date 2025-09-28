@@ -11,7 +11,7 @@ namespace HolidaySearch.Controllers
             _jsonController = new JSONController(dataPath);
         }
 
-        public List<Hotel> GetAllHotels()
+        public Hotel[] GetAllHotels()
         {
             return _jsonController.ReadAll<Hotel>();
         }
@@ -19,12 +19,12 @@ namespace HolidaySearch.Controllers
 
     public class HotelMatchingController
     {
-        public List<Hotel> GetMatchingHotels(List<Hotel> hotels, List<string> travelingTo, DateOnly departureDate, int duration)
+        public Hotel[] GetMatchingHotels(Hotel[] hotels, string[] travelingTo, DateOnly departureDate, int duration)
         {
             return hotels.Where(h =>
-                (!travelingTo.Any() || h.LocalAirports.Any(airport => travelingTo.Contains(airport))) &&
+                (travelingTo.Length == 0 || h.LocalAirports.Any(airport => travelingTo.Contains(airport))) &&
                 h.ArrivalDate == departureDate &&
-                h.Nights == duration).ToList();
+                h.Nights == duration).ToArray();
         }
     }
 }

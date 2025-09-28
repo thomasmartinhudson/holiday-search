@@ -39,7 +39,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
                 var airports = controller.GetAllAirports();
 
                 // Assert
-                Assert.Equal(2, airports.Count);
+                Assert.Equal(2, airports.Length);
 
                 var firstAirport = airports.First();
                 Assert.Equal(1, firstAirport.Id);
@@ -91,11 +91,11 @@ namespace HolidaySearch.Tests.Unit.Controllers
 
     public class AirportReferenceControllerTest
     {
-        private readonly List<Airport> _testAirports;
+        private readonly Airport[] _testAirports;
 
         public AirportReferenceControllerTest()
         {
-            _testAirports = new List<Airport>
+            _testAirports = new Airport[]
             {
                 new Airport { Id = 1, Code = "MAN", Name = "Manchester Airport", City = "Manchester" },
                 new Airport { Id = 2, Code = "LGW", Name = "London Gatwick Airport", City = "London" },
@@ -111,7 +111,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
             var result = AirportReferenceController.GetAirportCodes(null, _testAirports);
 
             // Assert
-            Assert.Equal(4, result.Count);
+            Assert.Equal(4, result.Length);
             Assert.Contains("MAN", result);
             Assert.Contains("LGW", result);
             Assert.Contains("AGP", result);
@@ -125,7 +125,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
             var result = AirportReferenceController.GetAirportCodes("", _testAirports);
 
             // Assert
-            Assert.Equal(4, result.Count);
+            Assert.Equal(4, result.Length);
             Assert.Contains("MAN", result);
             Assert.Contains("LGW", result);
             Assert.Contains("AGP", result);

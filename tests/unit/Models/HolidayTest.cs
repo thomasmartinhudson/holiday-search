@@ -27,7 +27,7 @@ namespace HolidaySearch.Tests.Unit.Models
                 Name = "Test Hotel",
                 ArrivalDate = new DateOnly(2023, 7, 8),
                 PricePerNight = 50.00m,
-                LocalAirports = new List<string> { "AGP" },
+                LocalAirports = new string[] { "AGP" },
                 Nights = 7
             };
 
@@ -67,7 +67,7 @@ namespace HolidaySearch.Tests.Unit.Models
                 Name = "Test Hotel",
                 ArrivalDate = new DateOnly(2023, 7, 8),
                 PricePerNight = 50.00m,
-                LocalAirports = new List<string> { "AGP" },
+                LocalAirports = new string[] { "AGP" },
                 Nights = 7
             };
 

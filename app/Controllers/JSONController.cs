@@ -11,7 +11,7 @@ namespace HolidaySearch.Controllers
             _dataPath = dataPath;
         }
 
-        public List<T> ReadAll<T>()
+        public T[] ReadAll<T>()
         {
             if (!File.Exists(_dataPath))
             {
@@ -27,9 +27,9 @@ namespace HolidaySearch.Controllers
                     PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower
                 };
 
-                var items = JsonSerializer.Deserialize<List<T>>(jsonContent, options);
+                var items = JsonSerializer.Deserialize<T[]>(jsonContent, options);
 
-                return items ?? new List<T>();
+                return items ?? [];
             }
             catch (JsonException ex)
             {

@@ -9,23 +9,23 @@ namespace HolidaySearch.Tests.Unit.Controllers
 {
     public class HolidaySearchControllerTest
     {
-        private readonly List<Flight> _testFlights;
-        private readonly List<Hotel> _testHotels;
+        private readonly Flight[] _testFlights;
+        private readonly Hotel[] _testHotels;
 
         public HolidaySearchControllerTest()
         {
-            _testFlights = new List<Flight>
+            _testFlights = new Flight[]
             {
                 new Flight { Id = 1, Airline = "Test Airline", From = "MAN", To = "AGP", Price = 100.00m, DepartureDate = new DateOnly(2023, 7, 1) },
                 new Flight { Id = 2, Airline = "Another Airline", From = "LGW", To = "PMI", Price = 200.00m, DepartureDate = new DateOnly(2023, 8, 15) },
                 new Flight { Id = 3, Airline = "Third Airline", From = "MAN", To = "AGP", Price = 150.00m, DepartureDate = new DateOnly(2023, 7, 1) }
             };
 
-            _testHotels = new List<Hotel>
+            _testHotels = new Hotel[]
             {
-                new Hotel { Id = 1, Name = "Test Hotel", ArrivalDate = new DateOnly(2023, 7, 1), PricePerNight = 50.00m, LocalAirports = new List<string> { "AGP" }, Nights = 7 },
-                new Hotel { Id = 2, Name = "Another Hotel", ArrivalDate = new DateOnly(2023, 8, 15), PricePerNight = 75.00m, LocalAirports = new List<string> { "PMI" }, Nights = 14 },
-                new Hotel { Id = 3, Name = "Third Hotel", ArrivalDate = new DateOnly(2023, 7, 1), PricePerNight = 60.00m, LocalAirports = new List<string> { "AGP" }, Nights = 7 }
+                new Hotel { Id = 1, Name = "Test Hotel", ArrivalDate = new DateOnly(2023, 7, 1), PricePerNight = 50.00m, LocalAirports = new string[] { "AGP" }, Nights = 7 },
+                new Hotel { Id = 2, Name = "Another Hotel", ArrivalDate = new DateOnly(2023, 8, 15), PricePerNight = 75.00m, LocalAirports = new string[] { "PMI" }, Nights = 14 },
+                new Hotel { Id = 3, Name = "Third Hotel", ArrivalDate = new DateOnly(2023, 7, 1), PricePerNight = 60.00m, LocalAirports = new string[] { "AGP" }, Nights = 7 }
             };
         }
 
@@ -34,8 +34,8 @@ namespace HolidaySearch.Tests.Unit.Controllers
         {
             // Arrange
             var controller = new HolidaySearchController();
-            var emptyFlights = new List<Flight>();
-            var hotels = _testHotels.Take(1).ToList();
+            var emptyFlights = new Flight[0];
+            var hotels = _testHotels.Take(1).ToArray();
 
             // Act
             var result = controller.GetHolidayResults(emptyFlights, hotels);
@@ -49,8 +49,8 @@ namespace HolidaySearch.Tests.Unit.Controllers
         {
             // Arrange
             var controller = new HolidaySearchController();
-            var flights = _testFlights.Take(1).ToList();
-            var emptyHotels = new List<Hotel>();
+            var flights = _testFlights.Take(1).ToArray();
+            var emptyHotels = new Hotel[0];
 
             // Act
             var result = controller.GetHolidayResults(flights, emptyHotels);
@@ -64,8 +64,8 @@ namespace HolidaySearch.Tests.Unit.Controllers
         {
             // Arrange
             var controller = new HolidaySearchController();
-            var emptyFlights = new List<Flight>();
-            var emptyHotels = new List<Hotel>();
+            var emptyFlights = new Flight[0];
+            var emptyHotels = new Hotel[0];
 
             // Act
             var result = controller.GetHolidayResults(emptyFlights, emptyHotels);
@@ -79,8 +79,8 @@ namespace HolidaySearch.Tests.Unit.Controllers
         {
             // Arrange
             var controller = new HolidaySearchController();
-            var singleFlight = _testFlights.Take(1).ToList();
-            var singleHotel = _testHotels.Take(1).ToList();
+            var singleFlight = _testFlights.Take(1).ToArray();
+            var singleHotel = _testHotels.Take(1).ToArray();
 
             // Act
             var result = controller.GetHolidayResults(singleFlight, singleHotel);
@@ -98,14 +98,14 @@ namespace HolidaySearch.Tests.Unit.Controllers
         {
             // Arrange
             var controller = new HolidaySearchController();
-            var flights = _testFlights.Take(2).ToList();
-            var hotels = _testHotels.Take(2).ToList();
+            var flights = _testFlights.Take(2).ToArray();
+            var hotels = _testHotels.Take(2).ToArray();
 
             // Act
             var result = controller.GetHolidayResults(flights, hotels);
 
             // Assert
-            Assert.Equal(4, result.Count); // 2 flights × 2 hotels = 4 combinations
+            Assert.Equal(4, result.Length); // 2 flights × 2 hotels = 4 combinations
         }
 
         [Fact]
@@ -113,17 +113,17 @@ namespace HolidaySearch.Tests.Unit.Controllers
         {
             // Arrange
             var controller = new HolidaySearchController();
-            var flights = _testFlights.Take(2).ToList();
-            var hotels = _testHotels.Take(2).ToList();
+            var flights = _testFlights.Take(2).ToArray();
+            var hotels = _testHotels.Take(2).ToArray();
 
             // Act
             var result = controller.GetHolidayResults(flights, hotels);
 
             // Assert
-            Assert.Equal(4, result.Count);
+            Assert.Equal(4, result.Length);
 
             // Verify all combinations exist
-            var combinations = result.Select(r => new { FlightId = r.Flight.Id, HotelId = r.Hotel.Id }).ToList();
+            var combinations = result.Select(r => new { FlightId = r.Flight.Id, HotelId = r.Hotel.Id }).ToArray();
             Assert.Contains(combinations, c => c.FlightId == 1 && c.HotelId == 1);
             Assert.Contains(combinations, c => c.FlightId == 1 && c.HotelId == 2);
             Assert.Contains(combinations, c => c.FlightId == 2 && c.HotelId == 1);
@@ -135,14 +135,14 @@ namespace HolidaySearch.Tests.Unit.Controllers
         {
             // Arrange
             var controller = new HolidaySearchController();
-            var flights = _testFlights.Take(2).ToList(); // Flight 1: £100, Flight 2: £200
-            var hotels = _testHotels.Take(2).ToList(); // Hotel 1: £50/night, Hotel 2: £75/night
+            var flights = _testFlights.Take(2).ToArray(); // Flight 1: £100, Flight 2: £200
+            var hotels = _testHotels.Take(2).ToArray(); // Hotel 1: £50/night, Hotel 2: £75/night
 
             // Act
             var result = controller.GetHolidayResults(flights, hotels);
 
             // Assert
-            Assert.Equal(4, result.Count);
+            Assert.Equal(4, result.Length);
 
             // Verify ordering (cheapest first)
             // Flight 1 + Hotel 1: £100 + (£50 × 7) = £450
@@ -161,8 +161,8 @@ namespace HolidaySearch.Tests.Unit.Controllers
         {
             // Arrange
             var controller = new HolidaySearchController();
-            var singleFlight = _testFlights.Take(1).ToList(); // £100
-            var singleHotel = _testHotels.Take(1).ToList(); // £50/night for 7 nights = £350
+            var singleFlight = _testFlights.Take(1).ToArray(); // £100
+            var singleHotel = _testHotels.Take(1).ToArray(); // £50/night for 7 nights = £350
 
             // Act
             var result = controller.GetHolidayResults(singleFlight, singleHotel);
@@ -178,18 +178,18 @@ namespace HolidaySearch.Tests.Unit.Controllers
         {
             // Arrange
             var controller = new HolidaySearchController();
-            var flights = new List<Flight>
+            var flights = new Flight[]
             {
                 new Flight { Id = 1, Airline = "Airline 1", From = "MAN", To = "AGP", Price = 100.00m, DepartureDate = new DateOnly(2023, 7, 1) },
                 new Flight { Id = 2, Airline = "Airline 2", From = "LGW", To = "AGP", Price = 100.00m, DepartureDate = new DateOnly(2023, 7, 1) }
             };
-            var singleHotel = _testHotels.Take(1).ToList();
+            var singleHotel = _testHotels.Take(1).ToArray();
 
             // Act
             var result = controller.GetHolidayResults(flights, singleHotel);
 
             // Assert
-            Assert.Equal(2, result.Count);
+            Assert.Equal(2, result.Length);
             Assert.All(result, r => Assert.Equal(100.00m + 350.00m, r.TotalPrice));
         }
 
@@ -198,18 +198,18 @@ namespace HolidaySearch.Tests.Unit.Controllers
         {
             // Arrange
             var controller = new HolidaySearchController();
-            var singleFlight = _testFlights.Take(1).ToList();
-            var hotels = new List<Hotel>
+            var singleFlight = _testFlights.Take(1).ToArray();
+            var hotels = new Hotel[]
             {
-                new Hotel { Id = 1, Name = "Hotel 1", ArrivalDate = new DateOnly(2023, 7, 1), PricePerNight = 50.00m, LocalAirports = new List<string> { "AGP" }, Nights = 7 },
-                new Hotel { Id = 2, Name = "Hotel 2", ArrivalDate = new DateOnly(2023, 7, 1), PricePerNight = 50.00m, LocalAirports = new List<string> { "AGP" }, Nights = 7 }
+                new Hotel { Id = 1, Name = "Hotel 1", ArrivalDate = new DateOnly(2023, 7, 1), PricePerNight = 50.00m, LocalAirports = new string[] { "AGP" }, Nights = 7 },
+                new Hotel { Id = 2, Name = "Hotel 2", ArrivalDate = new DateOnly(2023, 7, 1), PricePerNight = 50.00m, LocalAirports = new string[] { "AGP" }, Nights = 7 }
             };
 
             // Act
             var result = controller.GetHolidayResults(singleFlight, hotels);
 
             // Assert
-            Assert.Equal(2, result.Count);
+            Assert.Equal(2, result.Length);
             Assert.All(result, r => Assert.Equal(100.00m + 350.00m, r.TotalPrice));
         }
 
@@ -218,8 +218,8 @@ namespace HolidaySearch.Tests.Unit.Controllers
         {
             // Arrange
             var controller = new HolidaySearchController();
-            var singleFlight = _testFlights.Take(1).ToList();
-            var singleHotel = _testHotels.Take(1).ToList();
+            var singleFlight = _testFlights.Take(1).ToArray();
+            var singleHotel = _testHotels.Take(1).ToArray();
 
             // Act
             var result = controller.GetHolidayResults(singleFlight, singleHotel);
@@ -257,7 +257,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
             var result = controller.GetHolidayResults(flights, hotels);
 
             // Assert
-            Assert.Equal(9, result.Count); // 3 flights × 3 hotels = 9 combinations
+            Assert.Equal(9, result.Length); // 3 flights × 3 hotels = 9 combinations
         }
 
         [Fact]
@@ -265,22 +265,22 @@ namespace HolidaySearch.Tests.Unit.Controllers
         {
             // Arrange
             var controller = new HolidaySearchController();
-            var flights = new List<Flight>
+            var flights = new Flight[]
             {
                 new Flight { Id = 1, Airline = "Airline 1", From = "MAN", To = "AGP", Price = 100.00m, DepartureDate = new DateOnly(2023, 7, 1) },
                 new Flight { Id = 2, Airline = "Airline 2", From = "LGW", To = "AGP", Price = 100.00m, DepartureDate = new DateOnly(2023, 7, 1) }
             };
-            var hotels = new List<Hotel>
+            var hotels = new Hotel[]
             {
-                new Hotel { Id = 1, Name = "Hotel 1", ArrivalDate = new DateOnly(2023, 7, 1), PricePerNight = 50.00m, LocalAirports = new List<string> { "AGP" }, Nights = 7 },
-                new Hotel { Id = 2, Name = "Hotel 2", ArrivalDate = new DateOnly(2023, 7, 1), PricePerNight = 50.00m, LocalAirports = new List<string> { "AGP" }, Nights = 7 }
+                new Hotel { Id = 1, Name = "Hotel 1", ArrivalDate = new DateOnly(2023, 7, 1), PricePerNight = 50.00m, LocalAirports = new string[] { "AGP" }, Nights = 7 },
+                new Hotel { Id = 2, Name = "Hotel 2", ArrivalDate = new DateOnly(2023, 7, 1), PricePerNight = 50.00m, LocalAirports = new string[] { "AGP" }, Nights = 7 }
             };
 
             // Act
             var result = controller.GetHolidayResults(flights, hotels);
 
             // Assert
-            Assert.Equal(4, result.Count);
+            Assert.Equal(4, result.Length);
             Assert.All(result, r => Assert.Equal(100.00m + 350.00m, r.TotalPrice));
 
             // Verify the order is stable (first flight with first hotel, etc.)

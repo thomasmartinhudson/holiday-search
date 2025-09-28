@@ -43,7 +43,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
                 var flights = controller.GetAllFlights();
 
                 // Assert
-                Assert.Equal(2, flights.Count);
+                Assert.Equal(2, flights.Length);
 
                 var firstFlight = flights.First();
                 Assert.Equal(1, firstFlight.Id);
@@ -103,11 +103,11 @@ namespace HolidaySearch.Tests.Unit.Controllers
 
     public class FlightMatchingControllerTest
     {
-        private readonly List<Flight> _testFlights;
+        private readonly Flight[] _testFlights;
 
         public FlightMatchingControllerTest()
         {
-            _testFlights = new List<Flight>
+            _testFlights = new Flight[]
             {
                 new Flight { Id = 1, Airline = "Test Airline", From = "MAN", To = "AGP", Price = 125.50m, DepartureDate = new DateOnly(2023, 7, 1) },
                 new Flight { Id = 2, Airline = "Another Airline", From = "LGW", To = "PMI", Price = 200.00m, DepartureDate = new DateOnly(2023, 8, 15) },
@@ -123,7 +123,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
             var controller = new FlightMatchingController();
 
             // Act
-            var result = controller.GetMatchingFlights(_testFlights, new List<string>(), new List<string> { "AGP" }, new DateOnly(2023, 7, 1));
+            var result = FlightMatchingController.GetMatchingFlights(_testFlights, [], new string[] { "AGP" }, new DateOnly(2023, 7, 1));
 
             // Assert
             Assert.Single(result);
@@ -137,10 +137,10 @@ namespace HolidaySearch.Tests.Unit.Controllers
             var controller = new FlightMatchingController();
 
             // Act
-            var result = controller.GetMatchingFlights(_testFlights, new List<string> { "MAN" }, new List<string>(), new DateOnly(2023, 7, 1));
+            var result = FlightMatchingController.GetMatchingFlights(_testFlights, new string[] { "MAN" }, [], new DateOnly(2023, 7, 1));
 
             // Assert
-            Assert.Equal(2, result.Count);
+            Assert.Equal(2, result.Length);
             Assert.Contains(result, f => f.Id == 1);
             Assert.Contains(result, f => f.Id == 3);
         }
@@ -152,10 +152,10 @@ namespace HolidaySearch.Tests.Unit.Controllers
             var controller = new FlightMatchingController();
 
             // Act
-            var result = controller.GetMatchingFlights(_testFlights, new List<string> { "MAN" }, new List<string>(), new DateOnly(2023, 7, 1));
+            var result = FlightMatchingController.GetMatchingFlights(_testFlights, new string[] { "MAN" }, [], new DateOnly(2023, 7, 1));
 
             // Assert
-            Assert.Equal(2, result.Count);
+            Assert.Equal(2, result.Length);
             Assert.All(result, f => Assert.Equal("MAN", f.From));
         }
 
@@ -166,7 +166,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
             var controller = new FlightMatchingController();
 
             // Act
-            var result = controller.GetMatchingFlights(_testFlights, new List<string>(), new List<string> { "AGP" }, new DateOnly(2023, 7, 1));
+            var result = FlightMatchingController.GetMatchingFlights(_testFlights, [], new string[] { "AGP" }, new DateOnly(2023, 7, 1));
 
             // Assert
             Assert.Single(result);
@@ -180,10 +180,10 @@ namespace HolidaySearch.Tests.Unit.Controllers
             var controller = new FlightMatchingController();
 
             // Act
-            var result = controller.GetMatchingFlights(_testFlights, new List<string>(), new List<string>(), new DateOnly(2023, 7, 1));
+            var result = FlightMatchingController.GetMatchingFlights(_testFlights, [], [], new DateOnly(2023, 7, 1));
 
             // Assert
-            Assert.Equal(2, result.Count);
+            Assert.Equal(2, result.Length);
             Assert.All(result, f => Assert.Equal(new DateOnly(2023, 7, 1), f.DepartureDate));
         }
 
@@ -194,7 +194,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
             var controller = new FlightMatchingController();
 
             // Act
-            var result = controller.GetMatchingFlights(_testFlights, new List<string> { "INVALID" }, new List<string> { "INVALID" }, new DateOnly(2023, 12, 31));
+            var result = FlightMatchingController.GetMatchingFlights(_testFlights, new string[] { "INVALID" }, new string[] { "INVALID" }, new DateOnly(2023, 12, 31));
 
             // Assert
             Assert.Empty(result);
@@ -207,10 +207,10 @@ namespace HolidaySearch.Tests.Unit.Controllers
             var controller = new FlightMatchingController();
 
             // Act
-            var result = controller.GetMatchingFlights(_testFlights, new List<string> { "MAN", "LGW" }, new List<string>(), new DateOnly(2023, 7, 1));
+            var result = FlightMatchingController.GetMatchingFlights(_testFlights, new string[] { "MAN", "LGW" }, [], new DateOnly(2023, 7, 1));
 
             // Assert
-            Assert.Equal(2, result.Count);
+            Assert.Equal(2, result.Length);
             Assert.Contains(result, f => f.Id == 1);
             Assert.Contains(result, f => f.Id == 3);
         }
@@ -222,10 +222,10 @@ namespace HolidaySearch.Tests.Unit.Controllers
             var controller = new FlightMatchingController();
 
             // Act
-            var result = controller.GetMatchingFlights(_testFlights, new List<string>(), new List<string> { "AGP", "PMI" }, new DateOnly(2023, 7, 1));
+            var result = FlightMatchingController.GetMatchingFlights(_testFlights, [], new string[] { "AGP", "PMI" }, new DateOnly(2023, 7, 1));
 
             // Assert
-            Assert.Equal(2, result.Count);
+            Assert.Equal(2, result.Length);
             Assert.Contains(result, f => f.To == "AGP");
             Assert.Contains(result, f => f.To == "PMI");
         }
@@ -237,7 +237,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
             var controller = new FlightMatchingController();
 
             // Act
-            var result = controller.GetMatchingFlights(_testFlights, new List<string> { "MAN" }, new List<string> { "AGP" }, new DateOnly(2023, 7, 1));
+            var result = FlightMatchingController.GetMatchingFlights(_testFlights, new string[] { "MAN" }, new string[] { "AGP" }, new DateOnly(2023, 7, 1));
 
             // Assert
             Assert.Single(result);
@@ -254,7 +254,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
             var controller = new FlightMatchingController();
 
             // Act
-            var result = controller.GetMatchingFlights(_testFlights, new List<string> { "MAN" }, new List<string> { "AGP" }, new DateOnly(2023, 12, 31));
+            var result = FlightMatchingController.GetMatchingFlights(_testFlights, new string[] { "MAN" }, new string[] { "AGP" }, new DateOnly(2023, 12, 31));
 
             // Assert
             Assert.Empty(result);
@@ -267,7 +267,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
             var controller = new FlightMatchingController();
 
             // Act
-            var result = controller.GetMatchingFlights(_testFlights, new List<string> { "INVALID" }, new List<string> { "AGP" }, new DateOnly(2023, 7, 1));
+            var result = FlightMatchingController.GetMatchingFlights(_testFlights, new string[] { "INVALID" }, new string[] { "AGP" }, new DateOnly(2023, 7, 1));
 
             // Assert
             Assert.Empty(result);
@@ -280,7 +280,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
             var controller = new FlightMatchingController();
 
             // Act
-            var result = controller.GetMatchingFlights(_testFlights, new List<string> { "MAN" }, new List<string> { "INVALID" }, new DateOnly(2023, 7, 1));
+            var result = FlightMatchingController.GetMatchingFlights(_testFlights, new string[] { "MAN" }, new string[] { "INVALID" }, new DateOnly(2023, 7, 1));
 
             // Assert
             Assert.Empty(result);

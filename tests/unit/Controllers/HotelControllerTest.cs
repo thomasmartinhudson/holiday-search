@@ -43,14 +43,14 @@ namespace HolidaySearch.Tests.Unit.Controllers
                 var hotels = controller.GetAllHotels();
 
                 // Assert
-                Assert.Equal(2, hotels.Count);
+                Assert.Equal(2, hotels.Length);
 
                 var firstHotel = hotels.First();
                 Assert.Equal(1, firstHotel.Id);
                 Assert.Equal("Test Hotel", firstHotel.Name);
                 Assert.Equal(new DateOnly(2023, 7, 1), firstHotel.ArrivalDate);
                 Assert.Equal(50.00m, firstHotel.PricePerNight);
-                Assert.Equal(new List<string> { "MAN", "LGW" }, firstHotel.LocalAirports);
+                Assert.Equal(new string[] { "MAN", "LGW" }, firstHotel.LocalAirports);
                 Assert.Equal(7, firstHotel.Nights);
 
                 var secondHotel = hotels.Last();
@@ -58,7 +58,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
                 Assert.Equal("Another Hotel", secondHotel.Name);
                 Assert.Equal(new DateOnly(2023, 8, 15), secondHotel.ArrivalDate);
                 Assert.Equal(75.50m, secondHotel.PricePerNight);
-                Assert.Equal(new List<string> { "PMI" }, secondHotel.LocalAirports);
+                Assert.Equal(new string[] { "PMI" }, secondHotel.LocalAirports);
                 Assert.Equal(14, secondHotel.Nights);
             }
             finally
@@ -101,16 +101,16 @@ namespace HolidaySearch.Tests.Unit.Controllers
 
     public class HotelMatchingControllerTest
     {
-        private readonly List<Hotel> _testHotels;
+        private readonly Hotel[] _testHotels;
 
         public HotelMatchingControllerTest()
         {
-            _testHotels = new List<Hotel>
+            _testHotels = new Hotel[]
             {
-                new Hotel { Id = 1, Name = "Test Hotel", ArrivalDate = new DateOnly(2023, 7, 1), PricePerNight = 50.00m, LocalAirports = new List<string> { "MAN", "LGW" }, Nights = 7 },
-                new Hotel { Id = 2, Name = "Another Hotel", ArrivalDate = new DateOnly(2023, 8, 15), PricePerNight = 75.50m, LocalAirports = new List<string> { "PMI" }, Nights = 14 },
-                new Hotel { Id = 3, Name = "Third Hotel", ArrivalDate = new DateOnly(2023, 7, 1), PricePerNight = 60.00m, LocalAirports = new List<string> { "AGP" }, Nights = 7 },
-                new Hotel { Id = 4, Name = "Fourth Hotel", ArrivalDate = new DateOnly(2023, 8, 15), PricePerNight = 80.00m, LocalAirports = new List<string> { "LGW", "MAN" }, Nights = 14 }
+                new Hotel { Id = 1, Name = "Test Hotel", ArrivalDate = new DateOnly(2023, 7, 1), PricePerNight = 50.00m, LocalAirports = new string[] { "MAN", "LGW" }, Nights = 7 },
+                new Hotel { Id = 2, Name = "Another Hotel", ArrivalDate = new DateOnly(2023, 8, 15), PricePerNight = 75.50m, LocalAirports = new string[] { "PMI" }, Nights = 14 },
+                new Hotel { Id = 3, Name = "Third Hotel", ArrivalDate = new DateOnly(2023, 7, 1), PricePerNight = 60.00m, LocalAirports = new string[] { "AGP" }, Nights = 7 },
+                new Hotel { Id = 4, Name = "Fourth Hotel", ArrivalDate = new DateOnly(2023, 8, 15), PricePerNight = 80.00m, LocalAirports = new string[] { "LGW", "MAN" }, Nights = 14 }
             };
         }
 
@@ -121,10 +121,10 @@ namespace HolidaySearch.Tests.Unit.Controllers
             var controller = new HotelMatchingController();
 
             // Act
-            var result = controller.GetMatchingHotels(_testHotels, new List<string>(), new DateOnly(2023, 7, 1), 7);
+            var result = controller.GetMatchingHotels(_testHotels, [], new DateOnly(2023, 7, 1), 7);
 
             // Assert
-            Assert.Equal(2, result.Count);
+            Assert.Equal(2, result.Length);
             Assert.Contains(result, h => h.Id == 1);
             Assert.Contains(result, h => h.Id == 3);
         }
@@ -136,7 +136,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
             var controller = new HotelMatchingController();
 
             // Act
-            var result = controller.GetMatchingHotels(_testHotels, new List<string> { "AGP" }, new DateOnly(2023, 7, 1), 7);
+            var result = controller.GetMatchingHotels(_testHotels, new string[] { "AGP" }, new DateOnly(2023, 7, 1), 7);
 
             // Assert
             Assert.Single(result);
@@ -151,10 +151,10 @@ namespace HolidaySearch.Tests.Unit.Controllers
             var controller = new HotelMatchingController();
 
             // Act
-            var result = controller.GetMatchingHotels(_testHotels, new List<string>(), new DateOnly(2023, 7, 1), 7);
+            var result = controller.GetMatchingHotels(_testHotels, [], new DateOnly(2023, 7, 1), 7);
 
             // Assert
-            Assert.Equal(2, result.Count);
+            Assert.Equal(2, result.Length);
             Assert.All(result, h => Assert.Equal(new DateOnly(2023, 7, 1), h.ArrivalDate));
         }
 
@@ -165,10 +165,10 @@ namespace HolidaySearch.Tests.Unit.Controllers
             var controller = new HotelMatchingController();
 
             // Act
-            var result = controller.GetMatchingHotels(_testHotels, new List<string>(), new DateOnly(2023, 7, 1), 7);
+            var result = controller.GetMatchingHotels(_testHotels, [], new DateOnly(2023, 7, 1), 7);
 
             // Assert
-            Assert.Equal(2, result.Count);
+            Assert.Equal(2, result.Length);
             Assert.All(result, h => Assert.Equal(7, h.Nights));
         }
 
@@ -179,7 +179,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
             var controller = new HotelMatchingController();
 
             // Act
-            var result = controller.GetMatchingHotels(_testHotels, new List<string> { "INVALID" }, new DateOnly(2023, 12, 31), 30);
+            var result = controller.GetMatchingHotels(_testHotels, new string[] { "INVALID" }, new DateOnly(2023, 12, 31), 30);
 
             // Assert
             Assert.Empty(result);
@@ -192,7 +192,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
             var controller = new HotelMatchingController();
 
             // Act
-            var result = controller.GetMatchingHotels(_testHotels, new List<string> { "MAN", "LGW" }, new DateOnly(2023, 7, 1), 7);
+            var result = controller.GetMatchingHotels(_testHotels, new string[] { "MAN", "LGW" }, new DateOnly(2023, 7, 1), 7);
 
             // Assert
             Assert.Single(result);
@@ -206,7 +206,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
             var controller = new HotelMatchingController();
 
             // Act
-            var result = controller.GetMatchingHotels(_testHotels, new List<string> { "AGP" }, new DateOnly(2023, 7, 1), 7);
+            var result = controller.GetMatchingHotels(_testHotels, new string[] { "AGP" }, new DateOnly(2023, 7, 1), 7);
 
             // Assert
             Assert.Single(result);
@@ -223,7 +223,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
             var controller = new HotelMatchingController();
 
             // Act
-            var result = controller.GetMatchingHotels(_testHotels, new List<string> { "AGP" }, new DateOnly(2023, 12, 31), 7);
+            var result = controller.GetMatchingHotels(_testHotels, new string[] { "AGP" }, new DateOnly(2023, 12, 31), 7);
 
             // Assert
             Assert.Empty(result);
@@ -236,7 +236,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
             var controller = new HotelMatchingController();
 
             // Act
-            var result = controller.GetMatchingHotels(_testHotels, new List<string> { "AGP" }, new DateOnly(2023, 7, 1), 30);
+            var result = controller.GetMatchingHotels(_testHotels, new string[] { "AGP" }, new DateOnly(2023, 7, 1), 30);
 
             // Assert
             Assert.Empty(result);
@@ -249,7 +249,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
             var controller = new HotelMatchingController();
 
             // Act
-            var result = controller.GetMatchingHotels(_testHotels, new List<string> { "INVALID" }, new DateOnly(2023, 7, 1), 7);
+            var result = controller.GetMatchingHotels(_testHotels, new string[] { "INVALID" }, new DateOnly(2023, 7, 1), 7);
 
             // Assert
             Assert.Empty(result);
@@ -262,7 +262,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
             var controller = new HotelMatchingController();
 
             // Act
-            var result = controller.GetMatchingHotels(_testHotels, new List<string> { "LGW" }, new DateOnly(2023, 7, 1), 7);
+            var result = controller.GetMatchingHotels(_testHotels, new string[] { "LGW" }, new DateOnly(2023, 7, 1), 7);
 
             // Assert
             Assert.Single(result);
@@ -277,7 +277,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
             var controller = new HotelMatchingController();
 
             // Act
-            var result = controller.GetMatchingHotels(_testHotels, new List<string> { "MAN" }, new DateOnly(2023, 8, 15), 14);
+            var result = controller.GetMatchingHotels(_testHotels, new string[] { "MAN" }, new DateOnly(2023, 8, 15), 14);
 
             // Assert
             Assert.Single(result);

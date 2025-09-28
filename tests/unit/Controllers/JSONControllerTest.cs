@@ -36,7 +36,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
                 var items = controller.ReadAll<TestItem>();
 
                 // Assert
-                Assert.Equal(2, items.Count);
+                Assert.Equal(2, items.Length);
 
                 var firstItem = items.First();
                 Assert.Equal(1, firstItem.Id);

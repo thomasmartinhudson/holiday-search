@@ -16,7 +16,7 @@ namespace HolidaySearch.Tests.Unit.Models
                 Name = "Test Hotel",
                 ArrivalDate = new DateOnly(2023, 7, 1),
                 PricePerNight = 99.99m,
-                LocalAirports = new List<string> { "MAN", "LTN" },
+                LocalAirports = new string[] { "MAN", "LTN" },
                 Nights = 7
             };
 
@@ -24,7 +24,7 @@ namespace HolidaySearch.Tests.Unit.Models
             Assert.Equal("Test Hotel", hotel.Name);
             Assert.Equal(new DateOnly(2023, 7, 1), hotel.ArrivalDate);
             Assert.Equal(99.99m, hotel.PricePerNight);
-            Assert.Equal(new List<string> { "MAN", "LTN" }, hotel.LocalAirports);
+            Assert.Equal(new string[] { "MAN", "LTN" }, hotel.LocalAirports);
             Assert.Equal(7, hotel.Nights);
         }
 
@@ -36,7 +36,7 @@ namespace HolidaySearch.Tests.Unit.Models
             {
                 Name = "Test Hotel",
                 ArrivalDate = new DateOnly(2023, 7, 1),
-                LocalAirports = new List<string> { "MAN" },
+                LocalAirports = new string[] { "MAN" },
                 Nights = 3
             };
 
@@ -54,7 +54,7 @@ namespace HolidaySearch.Tests.Unit.Models
                 Name = "Test Hotel",
                 ArrivalDate = new DateOnly(2023, 7, 1),
                 PricePerNight = 123.456789m,
-                LocalAirports = new List<string> { "MAN" },
+                LocalAirports = new string[] { "MAN" },
                 Nights = 2
             };
 
@@ -72,7 +72,7 @@ namespace HolidaySearch.Tests.Unit.Models
                 Name = "Test Hotel",
                 ArrivalDate = new DateOnly(2023, 7, 1),
                 PricePerNight = 50.00m,
-                LocalAirports = new List<string> { "MAN" }
+                LocalAirports = new string[] { "MAN" }
             };
 
             // Act & Assert
@@ -88,7 +88,7 @@ namespace HolidaySearch.Tests.Unit.Models
             {
                 Name = "Test Hotel",
                 ArrivalDate = new DateOnly(2023, 7, 1),
-                LocalAirports = new List<string> { "MAN" }
+                LocalAirports = new string[] { "MAN" }
             };
 
             // Act & Assert - Cannot assign int to string property
@@ -103,11 +103,11 @@ namespace HolidaySearch.Tests.Unit.Models
             {
                 Name = "Test Hotel",
                 ArrivalDate = new DateOnly(2023, 7, 1),
-                LocalAirports = new List<string> { "MAN" }
+                LocalAirports = new string[] { "MAN" }
             };
 
             // Act & Assert - Cannot assign int to List<string> property
-            Assert.Throws<InvalidCastException>(() => hotel.LocalAirports = (List<string>)(object)123);
+            Assert.Throws<InvalidCastException>(() => hotel.LocalAirports = (string[])(object)123);
         }
 
         [Fact]
@@ -118,7 +118,7 @@ namespace HolidaySearch.Tests.Unit.Models
             {
                 Name = "Test Hotel",
                 ArrivalDate = new DateOnly(2023, 7, 1),
-                LocalAirports = new List<string> { "MAN" }
+                LocalAirports = new string[] { "MAN" }
             };
 
             // Act & Assert - Cannot assign null to decimal property (value type)
@@ -133,7 +133,7 @@ namespace HolidaySearch.Tests.Unit.Models
             {
                 Name = "Test Hotel",
                 ArrivalDate = new DateOnly(2023, 7, 1),
-                LocalAirports = new List<string> { "MAN" }
+                LocalAirports = new string[] { "MAN" }
             };
 
             // Act & Assert - Cannot assign null to DateOnly property (value type)
@@ -148,7 +148,7 @@ namespace HolidaySearch.Tests.Unit.Models
             {
                 Name = "Test Hotel",
                 ArrivalDate = new DateOnly(2023, 7, 1),
-                LocalAirports = new List<string> { "MAN" }
+                LocalAirports = new string[] { "MAN" }
             };
 
             // Act & Assert - Cannot assign null to int property (value type)

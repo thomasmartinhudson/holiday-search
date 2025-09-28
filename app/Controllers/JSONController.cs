@@ -1,12 +1,12 @@
 using System.Text.Json;
 
-namespace HolidaySearch.Services
+namespace HolidaySearch.Controllers
 {
-    public class JSONService
+    public class JSONController
     {
         private readonly string _dataPath;
 
-        public JSONService(string dataPath)
+        public JSONController(string dataPath)
         {
             _dataPath = dataPath;
         }

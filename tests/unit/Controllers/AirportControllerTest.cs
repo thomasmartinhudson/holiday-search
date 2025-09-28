@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Xunit;
-using HolidaySearch.Services;
+using HolidaySearch.Controllers;
 using HolidaySearch.Models;
 
-namespace HolidaySearch.Tests.Unit.Services
+namespace HolidaySearch.Tests.Unit.Controllers
 {
-    public class AirportServiceTest
+    public class AirportControllerTest
     {
         [Fact]
         public void GetAllAirports_ShouldReturnAllAirports_WhenValidDataFile()
@@ -33,10 +33,10 @@ namespace HolidaySearch.Tests.Unit.Services
 
             try
             {
-                var service = new AirportService(tempFile);
+                var controller = new AirportController(tempFile);
 
                 // Act
-                var airports = service.GetAllAirports();
+                var airports = controller.GetAllAirports();
 
                 // Assert
                 Assert.Equal(2, airports.Count);
@@ -76,10 +76,10 @@ namespace HolidaySearch.Tests.Unit.Services
 
             try
             {
-                var service = new AirportService(tempFile);
+                var controller = new AirportController(tempFile);
 
                 // Act & Assert
-                var exception = Assert.Throws<InvalidOperationException>(() => service.GetAllAirports());
+                var exception = Assert.Throws<InvalidOperationException>(() => controller.GetAllAirports());
                 Assert.Contains("Error reading data file", exception.Message);
             }
             finally

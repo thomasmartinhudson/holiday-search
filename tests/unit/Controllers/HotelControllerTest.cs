@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Xunit;
-using HolidaySearch.Services;
+using HolidaySearch.Controllers;
 using HolidaySearch.Models;
 
-namespace HolidaySearch.Tests.Unit.Services
+namespace HolidaySearch.Tests.Unit.Controllers
 {
-    public class HotelServiceTest
+    public class HotelControllerTest
     {
         [Fact]
         public void GetAllHotels_ShouldReturnAllHotels_WhenValidDataFile()
@@ -37,10 +37,10 @@ namespace HolidaySearch.Tests.Unit.Services
 
             try
             {
-                var service = new HotelService(tempFile);
+                var controller = new HotelController(tempFile);
 
                 // Act
-                var hotels = service.GetAllHotels();
+                var hotels = controller.GetAllHotels();
 
                 // Assert
                 Assert.Equal(2, hotels.Count);
@@ -86,10 +86,10 @@ namespace HolidaySearch.Tests.Unit.Services
 
             try
             {
-                var service = new HotelService(tempFile);
+                var controller = new HotelController(tempFile);
 
                 // Act & Assert
-                var exception = Assert.Throws<InvalidOperationException>(() => service.GetAllHotels());
+                var exception = Assert.Throws<InvalidOperationException>(() => controller.GetAllHotels());
                 Assert.Contains("Failed to parse JSON data", exception.Message);
             }
             finally

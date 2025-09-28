@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Xunit;
-using HolidaySearch.Services;
+using HolidaySearch.Controllers;
 
-namespace HolidaySearch.Tests.Unit.Services
+namespace HolidaySearch.Tests.Unit.Controllers
 {
-    public class JSONServiceTest
+    public class JSONControllerTest
     {
         [Fact]
         public void ReadAll_ShouldReturnAllItems_WhenValidDataFile()
@@ -30,10 +30,10 @@ namespace HolidaySearch.Tests.Unit.Services
 
             try
             {
-                var service = new JSONService(tempFile);
+                var controller = new JSONController(tempFile);
 
                 // Act
-                var items = service.ReadAll<TestItem>();
+                var items = controller.ReadAll<TestItem>();
 
                 // Assert
                 Assert.Equal(2, items.Count);
@@ -63,10 +63,10 @@ namespace HolidaySearch.Tests.Unit.Services
 
             try
             {
-                var service = new JSONService(tempFile);
+                var controller = new JSONController(tempFile);
 
                 // Act
-                var items = service.ReadAll<TestItem>();
+                var items = controller.ReadAll<TestItem>();
 
                 // Assert
                 Assert.Empty(items);
@@ -81,10 +81,10 @@ namespace HolidaySearch.Tests.Unit.Services
         public void ReadAll_ShouldThrowFileNotFoundException_WhenFileDoesNotExist()
         {
             // Arrange
-            var service = new JSONService("nonexistent.json");
+            var controller = new JSONController("nonexistent.json");
 
             // Act & Assert
-            var exception = Assert.Throws<FileNotFoundException>(() => service.ReadAll<TestItem>());
+            var exception = Assert.Throws<FileNotFoundException>(() => controller.ReadAll<TestItem>());
             Assert.Contains("Data file not found", exception.Message);
         }
 
@@ -97,10 +97,10 @@ namespace HolidaySearch.Tests.Unit.Services
 
             try
             {
-                var service = new JSONService(tempFile);
+                var controller = new JSONController(tempFile);
 
                 // Act & Assert
-                var exception = Assert.Throws<InvalidOperationException>(() => service.ReadAll<TestItem>());
+                var exception = Assert.Throws<InvalidOperationException>(() => controller.ReadAll<TestItem>());
                 Assert.Contains("Failed to parse JSON data", exception.Message);
             }
             finally
@@ -123,10 +123,10 @@ namespace HolidaySearch.Tests.Unit.Services
 
             try
             {
-                var service = new JSONService(tempFile);
+                var controller = new JSONController(tempFile);
 
                 // Act
-                var item = service.ReadSingle<TestItem>();
+                var item = controller.ReadSingle<TestItem>();
 
                 // Assert
                 Assert.Equal(1, item.Id);
@@ -143,10 +143,10 @@ namespace HolidaySearch.Tests.Unit.Services
         public void ReadSingle_ShouldThrowFileNotFoundException_WhenFileDoesNotExist()
         {
             // Arrange
-            var service = new JSONService("nonexistent.json");
+            var controller = new JSONController("nonexistent.json");
 
             // Act & Assert
-            var exception = Assert.Throws<FileNotFoundException>(() => service.ReadSingle<TestItem>());
+            var exception = Assert.Throws<FileNotFoundException>(() => controller.ReadSingle<TestItem>());
             Assert.Contains("Data file not found", exception.Message);
         }
 
@@ -159,10 +159,10 @@ namespace HolidaySearch.Tests.Unit.Services
 
             try
             {
-                var service = new JSONService(tempFile);
+                var controller = new JSONController(tempFile);
 
                 // Act & Assert
-                var exception = Assert.Throws<InvalidOperationException>(() => service.ReadSingle<TestItem>());
+                var exception = Assert.Throws<InvalidOperationException>(() => controller.ReadSingle<TestItem>());
                 Assert.Contains("Failed to parse JSON data", exception.Message);
             }
             finally
@@ -180,10 +180,10 @@ namespace HolidaySearch.Tests.Unit.Services
 
             try
             {
-                var service = new JSONService(tempFile);
+                var controller = new JSONController(tempFile);
 
                 // Act & Assert
-                var exception = Assert.Throws<InvalidOperationException>(() => service.ReadSingle<TestItem>());
+                var exception = Assert.Throws<InvalidOperationException>(() => controller.ReadSingle<TestItem>());
                 Assert.Contains("Failed to deserialize data", exception.Message);
             }
             finally

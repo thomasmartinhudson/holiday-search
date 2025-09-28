@@ -4,41 +4,9 @@ namespace HolidaySearch.Models
 {
     public class Flight : BaseModel
     {
-        private string _airline;
-        public string Airline 
-        { 
-            get => _airline;
-            set
-            {
-                if (value == null)
-                    throw new ArgumentNullException(nameof(value), "Airline cannot be null");
-                _airline = value;
-            }
-        }
-
-        private string _from;
-        public string From 
-        { 
-            get => _from;
-            set
-            {
-                if (value == null)
-                    throw new ArgumentNullException(nameof(value), "From cannot be null");
-                _from = value;
-            }
-        }
-
-        private string _to;
-        public string To 
-        { 
-            get => _to;
-            set
-            {
-                if (value == null)
-                    throw new ArgumentNullException(nameof(value), "To cannot be null");
-                _to = value;
-            }
-        }
+        public required string Airline { get; set; }
+        public required string From { get; set; }
+        public required string To { get; set; }
         
         private decimal _price;
         public decimal Price 
@@ -52,6 +20,6 @@ namespace HolidaySearch.Models
             }
         }
         
-        public DateOnly DepartureDate { get; set; }
+        public required DateOnly DepartureDate { get; set; }
     }
 }

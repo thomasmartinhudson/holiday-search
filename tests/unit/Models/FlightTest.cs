@@ -61,42 +61,19 @@ namespace HolidaySearch.Tests.Unit.Models
             Assert.Equal(123.46m, flight.Price);
         }
 
-        [Fact]
-        public void Flight_ShouldNotAllowNullAirline()
-        {
-            // Arrange
-            var flight = new Flight();
-
-            // Act & Assert
-            Assert.Throws<ArgumentNullException>(() => flight.Airline = null);
-        }
-
-        [Fact]
-        public void Flight_ShouldNotAllowNullFrom()
-        {
-            // Arrange
-            var flight = new Flight();
-
-            // Act & Assert
-            Assert.Throws<ArgumentNullException>(() => flight.From = null);
-        }
-
-        [Fact]
-        public void Flight_ShouldNotAllowNullTo()
-        {
-            // Arrange
-            var flight = new Flight();
-
-            // Act & Assert
-            Assert.Throws<ArgumentNullException>(() => flight.To = null);
-        }
 
 
         [Fact]
         public void Flight_ShouldNotAllowWrongTypeForAirline()
         {
             // Arrange
-            var flight = new Flight();
+            var flight = new Flight
+            {
+                Airline = "Test Airline",
+                From = "MAN",
+                To = "AGP",
+                DepartureDate = new DateOnly(2023, 7, 1)
+            };
 
             // Act & Assert - Cannot assign int to string property
             Assert.Throws<InvalidCastException>(() => flight.Airline = (string)(object)123);
@@ -106,7 +83,13 @@ namespace HolidaySearch.Tests.Unit.Models
         public void Flight_ShouldNotAllowWrongTypeForFrom()
         {
             // Arrange
-            var flight = new Flight();
+            var flight = new Flight
+            {
+                Airline = "Test Airline",
+                From = "MAN",
+                To = "AGP",
+                DepartureDate = new DateOnly(2023, 7, 1)
+            };
 
             // Act & Assert - Cannot assign int to string property
             Assert.Throws<InvalidCastException>(() => flight.From = (string)(object)123);
@@ -116,7 +99,13 @@ namespace HolidaySearch.Tests.Unit.Models
         public void Flight_ShouldNotAllowWrongTypeForTo()
         {
             // Arrange
-            var flight = new Flight();
+            var flight = new Flight
+            {
+                Airline = "Test Airline",
+                From = "MAN",
+                To = "AGP",
+                DepartureDate = new DateOnly(2023, 7, 1)
+            };
 
             // Act & Assert - Cannot assign int to string property
             Assert.Throws<InvalidCastException>(() => flight.To = (string)(object)123);
@@ -126,11 +115,50 @@ namespace HolidaySearch.Tests.Unit.Models
         public void Flight_ShouldNotAllowWrongTypeForPrice()
         {
             // Arrange
-            var flight = new Flight();
+            var flight = new Flight
+            {
+                Airline = "Test Airline",
+                From = "MAN",
+                To = "AGP",
+                DepartureDate = new DateOnly(2023, 7, 1)
+            };
 
             // Act & Assert - Cannot assign string to decimal property
             Assert.Throws<InvalidCastException>(() => flight.Price = (decimal)(object)"invalid");
         }
+
+        [Fact]
+        public void Flight_ShouldNotAllowNullPrice()
+        {
+            // Arrange
+            var flight = new Flight
+            {
+                Airline = "Test Airline",
+                From = "MAN",
+                To = "AGP",
+                DepartureDate = new DateOnly(2023, 7, 1)
+            };
+
+            // Act & Assert - Cannot assign null to decimal property (value type)
+            Assert.Throws<NullReferenceException>(() => flight.Price = (decimal)(object)null!);
+        }
+
+        [Fact]
+        public void Flight_ShouldNotAllowNullDepartureDate()
+        {
+            // Arrange
+            var flight = new Flight
+            {
+                Airline = "Test Airline",
+                From = "MAN",
+                To = "AGP",
+                DepartureDate = new DateOnly(2023, 7, 1)
+            };
+
+            // Act & Assert - Cannot assign null to DateOnly property (value type)
+            Assert.Throws<NullReferenceException>(() => flight.DepartureDate = (DateOnly)(object)null!);
+        }
+
 
     }
 }

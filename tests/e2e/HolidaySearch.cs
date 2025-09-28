@@ -2,7 +2,8 @@ using System;
 using System.IO;
 using System.Linq;
 using Xunit;
-using HolidaySearch.Controllers;
+using HolidaySearch.Views;
+using HolidaySearch.Models;
 
 namespace HolidaySearch.Tests.E2E
 {
@@ -18,30 +19,17 @@ namespace HolidaySearch.Tests.E2E
             try
             {
                 // Act
-                var flightDataController = new HolidaySearch.Controllers.FlightDataController();
-                var hotelDataController = new HolidaySearch.Controllers.HotelDataController();
-                var flightMatchingController = new HolidaySearch.Controllers.FlightMatchingController();
-                var hotelMatchingController = new HolidaySearch.Controllers.HotelMatchingController();
-                var holidaySearchController = new HolidaySearch.Controllers.HolidaySearchController();
+                var holidaySearchView = new HolidaySearch.Views.HolidaySearch();
                 
-                var flights = flightDataController.GetAllFlights();
-                var hotels = hotelDataController.GetAllHotels();
+                var searchCriteria = new HolidaySearch.Models.HolidaySearch
+                {
+                    DepartingFrom = "Manchester",
+                    TravelingTo = "Malaga",
+                    DepartureDate = new DateOnly(2023, 7, 1),
+                    Duration = 7
+                };
                 
-                var matchingFlights = flightMatchingController.GetMatchingFlights(
-                    flights,
-                    new List<string> { "MAN" },
-                    new List<string> { "AGP" },
-                    new DateOnly(2023, 7, 1)
-                );
-                
-                var matchingHotels = hotelMatchingController.GetMatchingHotels(
-                    hotels,
-                    new List<string> { "AGP" },
-                    new DateOnly(2023, 7, 1),
-                    7
-                );
-                
-                var results = holidaySearchController.GetHolidayResults(matchingFlights, matchingHotels);
+                var results = holidaySearchView.Search(searchCriteria);
 
                 // Assert
                 Assert.Single(results);

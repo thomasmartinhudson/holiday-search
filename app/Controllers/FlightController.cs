@@ -21,7 +21,7 @@ namespace HolidaySearch.Controllers
     {
         public List<Flight> GetMatchingFlights(List<Flight> flights, List<string> departingFrom, List<string> travelingTo, DateOnly departureDate)
         {
-            return flights.Where(f => 
+            return flights.Where(f =>
                 (!departingFrom.Any() || departingFrom.Contains(f.From)) &&
                 (!travelingTo.Any() || travelingTo.Contains(f.To)) &&
                 f.DepartureDate == departureDate).ToList();

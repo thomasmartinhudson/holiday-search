@@ -37,7 +37,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
 
                 // Assert
                 Assert.Equal(2, items.Count);
-                
+
                 var firstItem = items.First();
                 Assert.Equal(1, firstItem.Id);
                 Assert.Equal("Test Item 1", firstItem.Name);

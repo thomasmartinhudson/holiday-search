@@ -13,7 +13,7 @@ namespace HolidaySearch.Models
         public required DateOnly ArrivalDate { get; set; }
 
         private decimal _pricePerNight;
-        
+
         [JsonPropertyName("price_per_night")]
         public decimal PricePerNight
         {
@@ -30,7 +30,7 @@ namespace HolidaySearch.Models
         public required List<string> LocalAirports { get; set; } = new();
 
         private int _nights;
-        
+
         [JsonPropertyName("nights")]
         public int Nights
         {

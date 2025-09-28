@@ -28,7 +28,7 @@ namespace HolidaySearch.Tests.E2E
         {
             // Arrange
             var holidaySearchView = new HolidaySearch.Views.HolidaySearch();
-            
+
             var searchCriteria = new HolidaySearch.Models.HolidaySearch
             {
                 DepartingFrom = "Manchester",
@@ -36,7 +36,7 @@ namespace HolidaySearch.Tests.E2E
                 DepartureDate = new DateOnly(2023, 7, 1),
                 Duration = 7
             };
-            
+
             var results = holidaySearchView.Search(searchCriteria);
 
             // Assert
@@ -70,7 +70,7 @@ namespace HolidaySearch.Tests.E2E
         {
             // Arrange
             var holidaySearchView = new HolidaySearch.Views.HolidaySearch();
-            
+
             var searchCriteria = new HolidaySearch.Models.HolidaySearch
             {
                 DepartingFrom = "London",
@@ -78,7 +78,7 @@ namespace HolidaySearch.Tests.E2E
                 DepartureDate = new DateOnly(2023, 6, 15),
                 Duration = 10
             };
-            
+
             var results = holidaySearchView.Search(searchCriteria);
 
             // Assert
@@ -113,7 +113,7 @@ namespace HolidaySearch.Tests.E2E
         {
             // Arrange
             var holidaySearchView = new HolidaySearch.Views.HolidaySearch();
-            
+
             var searchCriteria = new HolidaySearch.Models.HolidaySearch
             {
                 DepartingFrom = null, // Any Airport
@@ -121,7 +121,7 @@ namespace HolidaySearch.Tests.E2E
                 DepartureDate = new DateOnly(2022, 11, 10),
                 Duration = 14
             };
-            
+
             var results = holidaySearchView.Search(searchCriteria);
 
             // Assert
@@ -157,10 +157,10 @@ namespace HolidaySearch.Tests.E2E
         {
             // Purpose: Test error handling when no flights match the search criteria
             // This ensures the system gracefully handles invalid routes without crashing
-            
+
             // Arrange
             var holidaySearchView = new HolidaySearch.Views.HolidaySearch();
-            
+
             var searchCriteria = new HolidaySearch.Models.HolidaySearch
             {
                 DepartingFrom = "MAN",
@@ -168,7 +168,7 @@ namespace HolidaySearch.Tests.E2E
                 DepartureDate = new DateOnly(2023, 7, 1),
                 Duration = 7
             };
-            
+
             // Act
             var results = holidaySearchView.Search(searchCriteria);
 
@@ -181,10 +181,10 @@ namespace HolidaySearch.Tests.E2E
         {
             // Purpose: Test error handling when no hotels match the search criteria
             // This ensures the system handles date/duration combinations with no available hotels
-            
+
             // Arrange
             var holidaySearchView = new HolidaySearch.Views.HolidaySearch();
-            
+
             var searchCriteria = new HolidaySearch.Models.HolidaySearch
             {
                 DepartingFrom = "MAN",
@@ -192,7 +192,7 @@ namespace HolidaySearch.Tests.E2E
                 DepartureDate = new DateOnly(2025, 12, 25), // Future date with no data
                 Duration = 7
             };
-            
+
             // Act
             var results = holidaySearchView.Search(searchCriteria);
 
@@ -207,10 +207,10 @@ namespace HolidaySearch.Tests.E2E
         {
             // Purpose: Test that when multiple flight/hotel combinations exist, results are ordered by total price
             // This validates the core business requirement of showing cheapest options first
-            
+
             // Arrange
             var holidaySearchView = new HolidaySearch.Views.HolidaySearch();
-            
+
             var searchCriteria = new HolidaySearch.Models.HolidaySearch
             {
                 DepartingFrom = null, // Any airport
@@ -218,19 +218,19 @@ namespace HolidaySearch.Tests.E2E
                 DepartureDate = new DateOnly(2023, 6, 15),
                 Duration = 10
             };
-            
+
             // Act
             var results = holidaySearchView.Search(searchCriteria);
 
             // Assert
             Assert.NotEmpty(results);
             Assert.True(results.Count > 1, "Should return multiple options for this search");
-            
+
             // Verify results are ordered by total price (cheapest first)
             for (int i = 1; i < results.Count; i++)
             {
-                Assert.True(results[i-1].TotalPrice <= results[i].TotalPrice, 
-                    $"Results not ordered by price: {results[i-1].TotalPrice} > {results[i].TotalPrice}");
+                Assert.True(results[i - 1].TotalPrice <= results[i].TotalPrice,
+                    $"Results not ordered by price: {results[i - 1].TotalPrice} > {results[i].TotalPrice}");
             }
         }
 
@@ -241,10 +241,10 @@ namespace HolidaySearch.Tests.E2E
         {
             // Purpose: Test that direct airport code input works without city name resolution
             // This validates the system accepts both city names and airport codes as input
-            
+
             // Arrange
             var holidaySearchView = new HolidaySearch.Views.HolidaySearch();
-            
+
             var searchCriteria = new HolidaySearch.Models.HolidaySearch
             {
                 DepartingFrom = "MAN", // Direct airport code
@@ -252,7 +252,7 @@ namespace HolidaySearch.Tests.E2E
                 DepartureDate = new DateOnly(2023, 7, 1),
                 Duration = 7
             };
-            
+
             // Act
             var results = holidaySearchView.Search(searchCriteria);
 
@@ -267,10 +267,10 @@ namespace HolidaySearch.Tests.E2E
         {
             // Purpose: Test that city names are correctly resolved to airport codes
             // This validates the airport reference controller's city-to-code mapping functionality
-            
+
             // Arrange
             var holidaySearchView = new HolidaySearch.Views.HolidaySearch();
-            
+
             var searchCriteria = new HolidaySearch.Models.HolidaySearch
             {
                 DepartingFrom = "Manchester", // City name
@@ -278,7 +278,7 @@ namespace HolidaySearch.Tests.E2E
                 DepartureDate = new DateOnly(2023, 7, 1),
                 Duration = 7
             };
-            
+
             // Act
             var results = holidaySearchView.Search(searchCriteria);
 
@@ -296,10 +296,10 @@ namespace HolidaySearch.Tests.E2E
         {
             // Purpose: Test that searches with non-matching dates return no results
             // This ensures the system correctly filters out flights/hotels that don't match the requested date
-            
+
             // Arrange
             var holidaySearchView = new HolidaySearch.Views.HolidaySearch();
-            
+
             var searchCriteria = new HolidaySearch.Models.HolidaySearch
             {
                 DepartingFrom = "MAN",
@@ -307,7 +307,7 @@ namespace HolidaySearch.Tests.E2E
                 DepartureDate = new DateOnly(2023, 8, 1), // Different date than available flights
                 Duration = 7
             };
-            
+
             // Act
             var results = holidaySearchView.Search(searchCriteria);
 
@@ -323,10 +323,10 @@ namespace HolidaySearch.Tests.E2E
         {
             // Purpose: Test that searches with non-matching durations return no results
             // This ensures the system correctly filters out hotels that don't match the requested duration
-            
+
             // Arrange
             var holidaySearchView = new HolidaySearch.Views.HolidaySearch();
-            
+
             var searchCriteria = new HolidaySearch.Models.HolidaySearch
             {
                 DepartingFrom = "MAN",
@@ -334,7 +334,7 @@ namespace HolidaySearch.Tests.E2E
                 DepartureDate = new DateOnly(2022, 11, 5),
                 Duration = 10 // No hotels with 10 nights on this date
             };
-            
+
             // Act
             var results = holidaySearchView.Search(searchCriteria);
 
@@ -349,10 +349,10 @@ namespace HolidaySearch.Tests.E2E
         {
             // Purpose: Test the most open search possible to validate system handles broad queries
             // This tests the system's ability to process and return all available combinations
-            
+
             // Arrange
             var holidaySearchView = new HolidaySearch.Views.HolidaySearch();
-            
+
             var searchCriteria = new HolidaySearch.Models.HolidaySearch
             {
                 DepartingFrom = null, // Any airport
@@ -360,13 +360,13 @@ namespace HolidaySearch.Tests.E2E
                 DepartureDate = new DateOnly(2023, 6, 15),
                 Duration = 10
             };
-            
+
             // Act
             var results = holidaySearchView.Search(searchCriteria);
 
             // Assert
             Assert.NotEmpty(results);
-            
+
             // Should include multiple destinations (PMI has multiple flights on this date)
             var destinations = results.Select(r => r.Flight.To).Distinct().ToList();
             Assert.True(destinations.Count >= 1, "Should include flights to at least one destination");

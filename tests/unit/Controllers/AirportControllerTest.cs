@@ -40,7 +40,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
 
                 // Assert
                 Assert.Equal(2, airports.Count);
-                
+
                 var firstAirport = airports.First();
                 Assert.Equal(1, firstAirport.Id);
                 Assert.Equal("MAN", firstAirport.Code);

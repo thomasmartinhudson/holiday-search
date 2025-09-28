@@ -32,7 +32,7 @@ namespace HolidaySearch.Controllers
             }
 
             // Search by city name
-            var cityMatches = airports.Where(a => 
+            var cityMatches = airports.Where(a =>
                 a.City.Equals(location, StringComparison.OrdinalIgnoreCase) ||
                 a.Name.Contains(location, StringComparison.OrdinalIgnoreCase))
                 .Select(a => a.Code)

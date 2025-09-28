@@ -44,7 +44,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
 
                 // Assert
                 Assert.Equal(2, flights.Count);
-                
+
                 var firstFlight = flights.First();
                 Assert.Equal(1, firstFlight.Id);
                 Assert.Equal("Test Airline", firstFlight.Airline);
@@ -90,9 +90,9 @@ namespace HolidaySearch.Tests.Unit.Controllers
             {
                 var controller = new FlightDataController(tempFile);
 
-            // Act & Assert
-            var exception = Assert.Throws<InvalidOperationException>(() => controller.GetAllFlights());
-            Assert.Contains("Failed to parse JSON data", exception.Message);
+                // Act & Assert
+                var exception = Assert.Throws<InvalidOperationException>(() => controller.GetAllFlights());
+                Assert.Contains("Failed to parse JSON data", exception.Message);
             }
             finally
             {

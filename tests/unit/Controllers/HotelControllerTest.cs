@@ -44,7 +44,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
 
                 // Assert
                 Assert.Equal(2, hotels.Count);
-                
+
                 var firstHotel = hotels.First();
                 Assert.Equal(1, firstHotel.Id);
                 Assert.Equal("Test Hotel", firstHotel.Name);

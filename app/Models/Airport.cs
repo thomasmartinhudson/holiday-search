@@ -6,7 +6,7 @@ namespace HolidaySearch.Models
     public class Airport : BaseModel
     {
         private string _code = string.Empty;
-        
+
         [JsonPropertyName("code")]
         public string Code
         {
@@ -15,13 +15,13 @@ namespace HolidaySearch.Models
             {
                 if (string.IsNullOrWhiteSpace(value))
                     throw new ArgumentException("Airport code cannot be null or empty", nameof(value));
-                
+
                 if (value.Length != 3)
                     throw new ArgumentException("Airport code must be exactly 3 letters", nameof(value));
-                
+
                 if (!value.All(char.IsLetter))
                     throw new ArgumentException("Airport code must contain only letters", nameof(value));
-                
+
                 _code = value.ToUpperInvariant();
             }
         }

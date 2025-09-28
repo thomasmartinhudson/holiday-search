@@ -7,18 +7,18 @@ namespace HolidaySearch.Models
     {
         [JsonPropertyName("airline")]
         public required string Airline { get; set; }
-        
+
         [JsonPropertyName("from")]
         public required string From { get; set; }
-        
+
         [JsonPropertyName("to")]
         public required string To { get; set; }
-        
+
         private decimal _price;
-        
+
         [JsonPropertyName("price")]
-        public decimal Price 
-        { 
+        public decimal Price
+        {
             get => _price;
             set
             {
@@ -27,7 +27,7 @@ namespace HolidaySearch.Models
                 _price = Math.Round(value, 2);
             }
         }
-        
+
         [JsonPropertyName("departure_date")]
         public required DateOnly DepartureDate { get; set; }
     }

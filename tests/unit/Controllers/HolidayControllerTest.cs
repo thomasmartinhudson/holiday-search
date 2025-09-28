@@ -121,7 +121,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
 
             // Assert
             Assert.Equal(4, result.Count);
-            
+
             // Verify all combinations exist
             var combinations = result.Select(r => new { FlightId = r.Flight.Id, HotelId = r.Hotel.Id }).ToList();
             Assert.Contains(combinations, c => c.FlightId == 1 && c.HotelId == 1);
@@ -143,13 +143,13 @@ namespace HolidaySearch.Tests.Unit.Controllers
 
             // Assert
             Assert.Equal(4, result.Count);
-            
+
             // Verify ordering (cheapest first)
             // Flight 1 + Hotel 1: £100 + (£50 × 7) = £450
             // Flight 1 + Hotel 2: £100 + (£75 × 14) = £1150
             // Flight 2 + Hotel 1: £200 + (£50 × 7) = £550
             // Flight 2 + Hotel 2: £200 + (£75 × 14) = £1250
-            
+
             Assert.Equal(450.00m, result[0].TotalPrice);
             Assert.Equal(550.00m, result[1].TotalPrice);
             Assert.Equal(1150.00m, result[2].TotalPrice);
@@ -227,7 +227,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
             // Assert
             Assert.Single(result);
             var holidayResult = result.First();
-            
+
             // Verify flight properties
             Assert.Equal(1, holidayResult.Flight.Id);
             Assert.Equal("Test Airline", holidayResult.Flight.Airline);
@@ -235,7 +235,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
             Assert.Equal("AGP", holidayResult.Flight.To);
             Assert.Equal(100.00m, holidayResult.Flight.Price);
             Assert.Equal(new DateOnly(2023, 7, 1), holidayResult.Flight.DepartureDate);
-            
+
             // Verify hotel properties
             Assert.Equal(1, holidayResult.Hotel.Id);
             Assert.Equal("Test Hotel", holidayResult.Hotel.Name);
@@ -282,7 +282,7 @@ namespace HolidaySearch.Tests.Unit.Controllers
             // Assert
             Assert.Equal(4, result.Count);
             Assert.All(result, r => Assert.Equal(100.00m + 350.00m, r.TotalPrice));
-            
+
             // Verify the order is stable (first flight with first hotel, etc.)
             Assert.Equal(1, result[0].Flight.Id);
             Assert.Equal(1, result[0].Hotel.Id);

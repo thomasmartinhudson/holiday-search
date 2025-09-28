@@ -26,7 +26,7 @@ namespace HolidaySearch.Controllers
                     PropertyNameCaseInsensitive = true,
                     PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower
                 };
-                
+
                 var items = JsonSerializer.Deserialize<List<T>>(jsonContent, options);
 
                 return items ?? new List<T>();
@@ -56,7 +56,7 @@ namespace HolidaySearch.Controllers
                     PropertyNameCaseInsensitive = true,
                     PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower
                 };
-                
+
                 var item = JsonSerializer.Deserialize<T>(jsonContent, options);
 
                 if (item == null)

@@ -43,9 +43,9 @@ namespace HolidaySearch.Views
 
             // Step 4: Get matching flights using FlightMatchingController
             var matchingFlights = _flightMatchingController.GetMatchingFlights(
-                allFlights, 
-                departingFromCodes, 
-                travelingToCodes, 
+                allFlights,
+                departingFromCodes,
+                travelingToCodes,
                 searchCriteria.DepartureDate
             );
 
@@ -60,9 +60,9 @@ namespace HolidaySearch.Views
             // Step 6: Get matching hotels from HotelMatchingController
             var destinationCodes = _airportReferenceController.GetAirportCodes(searchCriteria.TravelingTo, allAirports);
             var matchingHotels = _hotelMatchingController.GetMatchingHotels(
-                allHotels, 
-                destinationCodes, 
-                searchCriteria.DepartureDate, 
+                allHotels,
+                destinationCodes,
+                searchCriteria.DepartureDate,
                 searchCriteria.Duration
             );
             if (matchingHotels.Count == 0)

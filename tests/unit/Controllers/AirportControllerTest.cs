@@ -107,11 +107,8 @@ namespace HolidaySearch.Tests.Unit.Controllers
         [Fact]
         public void GetAirportCodes_ShouldReturnAllAirportCodes_WhenLocationIsNull()
         {
-            // Arrange
-            var controller = new AirportReferenceController();
-
             // Act
-            var result = controller.GetAirportCodes(null, _testAirports);
+            var result = AirportReferenceController.GetAirportCodes(null, _testAirports);
 
             // Assert
             Assert.Equal(4, result.Count);
@@ -124,11 +121,8 @@ namespace HolidaySearch.Tests.Unit.Controllers
         [Fact]
         public void GetAirportCodes_ShouldReturnAllAirportCodes_WhenLocationIsEmpty()
         {
-            // Arrange
-            var controller = new AirportReferenceController();
-
             // Act
-            var result = controller.GetAirportCodes("", _testAirports);
+            var result = AirportReferenceController.GetAirportCodes("", _testAirports);
 
             // Assert
             Assert.Equal(4, result.Count);
@@ -141,11 +135,8 @@ namespace HolidaySearch.Tests.Unit.Controllers
         [Fact]
         public void GetAirportCodes_ShouldReturnSingleAirportCode_WhenValidAirportCodeProvided()
         {
-            // Arrange
-            var controller = new AirportReferenceController();
-
             // Act
-            var result = controller.GetAirportCodes("MAN", _testAirports);
+            var result = AirportReferenceController.GetAirportCodes("MAN", _testAirports);
 
             // Assert
             Assert.Single(result);
@@ -155,11 +146,8 @@ namespace HolidaySearch.Tests.Unit.Controllers
         [Fact]
         public void GetAirportCodes_ShouldReturnSingleAirportCode_WhenValidAirportCodeProvided_Lowercase()
         {
-            // Arrange
-            var controller = new AirportReferenceController();
-
             // Act
-            var result = controller.GetAirportCodes("man", _testAirports);
+            var result = AirportReferenceController.GetAirportCodes("man", _testAirports);
 
             // Assert
             Assert.Single(result);
@@ -169,11 +157,8 @@ namespace HolidaySearch.Tests.Unit.Controllers
         [Fact]
         public void GetAirportCodes_ShouldReturnMatchingAirportCodes_WhenCityNameProvided()
         {
-            // Arrange
-            var controller = new AirportReferenceController();
-
             // Act
-            var result = controller.GetAirportCodes("Manchester", _testAirports);
+            var result = AirportReferenceController.GetAirportCodes("Manchester", _testAirports);
 
             // Assert
             Assert.Single(result);
@@ -183,11 +168,8 @@ namespace HolidaySearch.Tests.Unit.Controllers
         [Fact]
         public void GetAirportCodes_ShouldReturnMatchingAirportCodes_WhenCityNameProvided_CaseInsensitive()
         {
-            // Arrange
-            var controller = new AirportReferenceController();
-
             // Act
-            var result = controller.GetAirportCodes("manchester", _testAirports);
+            var result = AirportReferenceController.GetAirportCodes("manchester", _testAirports);
 
             // Assert
             Assert.Single(result);
@@ -197,11 +179,8 @@ namespace HolidaySearch.Tests.Unit.Controllers
         [Fact]
         public void GetAirportCodes_ShouldReturnMatchingAirportCodes_WhenAirportNameProvided()
         {
-            // Arrange
-            var controller = new AirportReferenceController();
-
             // Act
-            var result = controller.GetAirportCodes("Gatwick", _testAirports);
+            var result = AirportReferenceController.GetAirportCodes("Gatwick", _testAirports);
 
             // Assert
             Assert.Single(result);
@@ -211,11 +190,8 @@ namespace HolidaySearch.Tests.Unit.Controllers
         [Fact]
         public void GetAirportCodes_ShouldReturnMatchingAirportCodes_WhenAirportNameProvided_CaseInsensitive()
         {
-            // Arrange
-            var controller = new AirportReferenceController();
-
             // Act
-            var result = controller.GetAirportCodes("gatwick", _testAirports);
+            var result = AirportReferenceController.GetAirportCodes("gatwick", _testAirports);
 
             // Assert
             Assert.Single(result);
@@ -225,11 +201,8 @@ namespace HolidaySearch.Tests.Unit.Controllers
         [Fact]
         public void GetAirportCodes_ShouldReturnEmptyList_WhenNoMatchingLocation()
         {
-            // Arrange
-            var controller = new AirportReferenceController();
-
             // Act
-            var result = controller.GetAirportCodes("NonExistentCity", _testAirports);
+            var result = AirportReferenceController.GetAirportCodes("NonExistentCity", _testAirports);
 
             // Assert
             Assert.Empty(result);
@@ -238,11 +211,8 @@ namespace HolidaySearch.Tests.Unit.Controllers
         [Fact]
         public void GetAirportCodes_ShouldReturnEmptyList_WhenInvalidAirportCodeFormat()
         {
-            // Arrange
-            var controller = new AirportReferenceController();
-
             // Act
-            var result = controller.GetAirportCodes("AB", _testAirports);
+            var result = AirportReferenceController.GetAirportCodes("AB", _testAirports);
 
             // Assert
             Assert.Empty(result);
@@ -251,11 +221,8 @@ namespace HolidaySearch.Tests.Unit.Controllers
         [Fact]
         public void GetAirportCodes_ShouldReturnEmptyList_WhenInvalidAirportCodeFormat_TooLong()
         {
-            // Arrange
-            var controller = new AirportReferenceController();
-
             // Act
-            var result = controller.GetAirportCodes("ABCD", _testAirports);
+            var result = AirportReferenceController.GetAirportCodes("ABCD", _testAirports);
 
             // Assert
             Assert.Empty(result);
@@ -264,11 +231,8 @@ namespace HolidaySearch.Tests.Unit.Controllers
         [Fact]
         public void GetAirportCodes_ShouldReturnEmptyList_WhenInvalidAirportCodeFormat_ContainsNumbers()
         {
-            // Arrange
-            var controller = new AirportReferenceController();
-
             // Act
-            var result = controller.GetAirportCodes("M1N", _testAirports);
+            var result = AirportReferenceController.GetAirportCodes("M1N", _testAirports);
 
             // Assert
             Assert.Empty(result);

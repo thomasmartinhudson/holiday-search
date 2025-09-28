@@ -2,14 +2,9 @@ using HolidaySearch.Models;
 
 namespace HolidaySearch.Controllers
 {
-    public class AirportDataController
+    public class AirportDataController(string dataPath = "data/airports.json")
     {
-        private readonly JSONController _jsonController;
-
-        public AirportDataController(string dataPath = "data/airports.json")
-        {
-            _jsonController = new JSONController(dataPath);
-        }
+        private readonly JSONController _jsonController = new(dataPath);
 
         public List<Airport> GetAllAirports()
         {
@@ -19,16 +14,16 @@ namespace HolidaySearch.Controllers
 
     public class AirportReferenceController
     {
-        public List<string> GetAirportCodes(string? location, List<Airport> airports)
+        public static List<string> GetAirportCodes(string? location, List<Airport> airports)
         {
             // If no location is provided, return all airport codes (null == "Any")
             if (string.IsNullOrEmpty(location))
-                return airports.Select(a => a.Code).ToList();
+                return [.. airports.Select(a => a.Code)];
 
             // Check if it's already an airport code (3 letters)
             if (location.Length == 3 && location.All(char.IsLetter) && location.All(char.IsUpper))
             {
-                return new List<string> { location };
+                return [location];
             }
 
             // Search by city name
@@ -38,10 +33,10 @@ namespace HolidaySearch.Controllers
                 .Select(a => a.Code)
                 .ToList();
 
-            if (cityMatches.Any())
+            if (cityMatches.Count > 0)
                 return cityMatches;
 
-            return new List<string>();
+            return [];
         }
     }
 }

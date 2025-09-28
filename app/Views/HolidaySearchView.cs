@@ -8,7 +8,6 @@ namespace HolidaySearch.Views
         private readonly HotelDataController _hotelDataController;
         private readonly HotelMatchingController _hotelMatchingController;
         private readonly AirportDataController _airportDataController;
-        private readonly AirportReferenceController _airportReferenceController;
         private readonly FlightDataController _flightDataController;
         private readonly FlightMatchingController _flightMatchingController;
         private readonly HolidaySearchController _holidaySearchController;
@@ -18,7 +17,6 @@ namespace HolidaySearch.Views
             _hotelDataController = new HotelDataController();
             _hotelMatchingController = new HotelMatchingController();
             _airportDataController = new AirportDataController();
-            _airportReferenceController = new AirportReferenceController();
             _flightDataController = new FlightDataController();
             _flightMatchingController = new FlightMatchingController();
             _holidaySearchController = new HolidaySearchController();
@@ -30,8 +28,8 @@ namespace HolidaySearch.Views
             var allAirports = _airportDataController.GetAllAirports();
 
             // Step 2: Get all Airport codes using AirportReferenceController
-            var departingFromCodes = _airportReferenceController.GetAirportCodes(searchCriteria.DepartingFrom, allAirports);
-            var travelingToCodes = _airportReferenceController.GetAirportCodes(searchCriteria.TravelingTo, allAirports);
+            var departingFromCodes = AirportReferenceController.GetAirportCodes(searchCriteria.DepartingFrom, allAirports);
+            var travelingToCodes = AirportReferenceController.GetAirportCodes(searchCriteria.TravelingTo, allAirports);
 
             if (departingFromCodes.Count == 0 || travelingToCodes.Count == 0)
             {
@@ -58,7 +56,7 @@ namespace HolidaySearch.Views
             var allHotels = _hotelDataController.GetAllHotels();
 
             // Step 6: Get matching hotels from HotelMatchingController
-            var destinationCodes = _airportReferenceController.GetAirportCodes(searchCriteria.TravelingTo, allAirports);
+            var destinationCodes = AirportReferenceController.GetAirportCodes(searchCriteria.TravelingTo, allAirports);
             var matchingHotels = _hotelMatchingController.GetMatchingHotels(
                 allHotels,
                 destinationCodes,

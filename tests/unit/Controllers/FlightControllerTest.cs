@@ -99,6 +99,191 @@ namespace HolidaySearch.Tests.Unit.Controllers
                 File.Delete(tempFile);
             }
         }
+    }
 
+    public class FlightMatchingControllerTest
+    {
+        private readonly List<Flight> _testFlights;
+
+        public FlightMatchingControllerTest()
+        {
+            _testFlights = new List<Flight>
+            {
+                new Flight { Id = 1, Airline = "Test Airline", From = "MAN", To = "AGP", Price = 125.50m, DepartureDate = new DateOnly(2023, 7, 1) },
+                new Flight { Id = 2, Airline = "Another Airline", From = "LGW", To = "PMI", Price = 200.00m, DepartureDate = new DateOnly(2023, 8, 15) },
+                new Flight { Id = 3, Airline = "Third Airline", From = "MAN", To = "PMI", Price = 150.00m, DepartureDate = new DateOnly(2023, 7, 1) },
+                new Flight { Id = 4, Airline = "Fourth Airline", From = "LGW", To = "AGP", Price = 175.00m, DepartureDate = new DateOnly(2023, 8, 15) }
+            };
+        }
+
+        [Fact]
+        public void GetMatchingFlights_ShouldReturnAllFlights_WhenEmptyDepartureList()
+        {
+            // Arrange
+            var controller = new FlightMatchingController();
+
+            // Act
+            var result = controller.GetMatchingFlights(_testFlights, new List<string>(), new List<string> { "AGP" }, new DateOnly(2023, 7, 1));
+
+            // Assert
+            Assert.Single(result);
+            Assert.Equal(1, result.First().Id);
+        }
+
+        [Fact]
+        public void GetMatchingFlights_ShouldReturnAllFlights_WhenEmptyDestinationList()
+        {
+            // Arrange
+            var controller = new FlightMatchingController();
+
+            // Act
+            var result = controller.GetMatchingFlights(_testFlights, new List<string> { "MAN" }, new List<string>(), new DateOnly(2023, 7, 1));
+
+            // Assert
+            Assert.Equal(2, result.Count);
+            Assert.Contains(result, f => f.Id == 1);
+            Assert.Contains(result, f => f.Id == 3);
+        }
+
+        [Fact]
+        public void GetMatchingFlights_ShouldReturnMatchingFlights_WhenSpecificDepartureAirport()
+        {
+            // Arrange
+            var controller = new FlightMatchingController();
+
+            // Act
+            var result = controller.GetMatchingFlights(_testFlights, new List<string> { "MAN" }, new List<string>(), new DateOnly(2023, 7, 1));
+
+            // Assert
+            Assert.Equal(2, result.Count);
+            Assert.All(result, f => Assert.Equal("MAN", f.From));
+        }
+
+        [Fact]
+        public void GetMatchingFlights_ShouldReturnMatchingFlights_WhenSpecificDestinationAirport()
+        {
+            // Arrange
+            var controller = new FlightMatchingController();
+
+            // Act
+            var result = controller.GetMatchingFlights(_testFlights, new List<string>(), new List<string> { "AGP" }, new DateOnly(2023, 7, 1));
+
+            // Assert
+            Assert.Single(result);
+            Assert.Equal("AGP", result.First().To);
+        }
+
+        [Fact]
+        public void GetMatchingFlights_ShouldReturnMatchingFlights_WhenSpecificDepartureDate()
+        {
+            // Arrange
+            var controller = new FlightMatchingController();
+
+            // Act
+            var result = controller.GetMatchingFlights(_testFlights, new List<string>(), new List<string>(), new DateOnly(2023, 7, 1));
+
+            // Assert
+            Assert.Equal(2, result.Count);
+            Assert.All(result, f => Assert.Equal(new DateOnly(2023, 7, 1), f.DepartureDate));
+        }
+
+        [Fact]
+        public void GetMatchingFlights_ShouldReturnEmptyList_WhenNoMatchingCriteria()
+        {
+            // Arrange
+            var controller = new FlightMatchingController();
+
+            // Act
+            var result = controller.GetMatchingFlights(_testFlights, new List<string> { "INVALID" }, new List<string> { "INVALID" }, new DateOnly(2023, 12, 31));
+
+            // Assert
+            Assert.Empty(result);
+        }
+
+        [Fact]
+        public void GetMatchingFlights_ShouldReturnMatchingFlights_WhenMultipleDepartureAirports()
+        {
+            // Arrange
+            var controller = new FlightMatchingController();
+
+            // Act
+            var result = controller.GetMatchingFlights(_testFlights, new List<string> { "MAN", "LGW" }, new List<string>(), new DateOnly(2023, 7, 1));
+
+            // Assert
+            Assert.Equal(2, result.Count);
+            Assert.Contains(result, f => f.Id == 1);
+            Assert.Contains(result, f => f.Id == 3);
+        }
+
+        [Fact]
+        public void GetMatchingFlights_ShouldReturnMatchingFlights_WhenMultipleDestinationAirports()
+        {
+            // Arrange
+            var controller = new FlightMatchingController();
+
+            // Act
+            var result = controller.GetMatchingFlights(_testFlights, new List<string>(), new List<string> { "AGP", "PMI" }, new DateOnly(2023, 7, 1));
+
+            // Assert
+            Assert.Equal(2, result.Count);
+            Assert.Contains(result, f => f.To == "AGP");
+            Assert.Contains(result, f => f.To == "PMI");
+        }
+
+        [Fact]
+        public void GetMatchingFlights_ShouldReturnMatchingFlights_WhenAllCriteriaMatch()
+        {
+            // Arrange
+            var controller = new FlightMatchingController();
+
+            // Act
+            var result = controller.GetMatchingFlights(_testFlights, new List<string> { "MAN" }, new List<string> { "AGP" }, new DateOnly(2023, 7, 1));
+
+            // Assert
+            Assert.Single(result);
+            Assert.Equal(1, result.First().Id);
+            Assert.Equal("MAN", result.First().From);
+            Assert.Equal("AGP", result.First().To);
+            Assert.Equal(new DateOnly(2023, 7, 1), result.First().DepartureDate);
+        }
+
+        [Fact]
+        public void GetMatchingFlights_ShouldReturnEmptyList_WhenNoFlightsMatchDate()
+        {
+            // Arrange
+            var controller = new FlightMatchingController();
+
+            // Act
+            var result = controller.GetMatchingFlights(_testFlights, new List<string> { "MAN" }, new List<string> { "AGP" }, new DateOnly(2023, 12, 31));
+
+            // Assert
+            Assert.Empty(result);
+        }
+
+        [Fact]
+        public void GetMatchingFlights_ShouldReturnEmptyList_WhenNoFlightsMatchDeparture()
+        {
+            // Arrange
+            var controller = new FlightMatchingController();
+
+            // Act
+            var result = controller.GetMatchingFlights(_testFlights, new List<string> { "INVALID" }, new List<string> { "AGP" }, new DateOnly(2023, 7, 1));
+
+            // Assert
+            Assert.Empty(result);
+        }
+
+        [Fact]
+        public void GetMatchingFlights_ShouldReturnEmptyList_WhenNoFlightsMatchDestination()
+        {
+            // Arrange
+            var controller = new FlightMatchingController();
+
+            // Act
+            var result = controller.GetMatchingFlights(_testFlights, new List<string> { "MAN" }, new List<string> { "INVALID" }, new DateOnly(2023, 7, 1));
+
+            // Assert
+            Assert.Empty(result);
+        }
     }
 }

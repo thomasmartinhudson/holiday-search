@@ -16,4 +16,15 @@ namespace HolidaySearch.Controllers
             return _jsonController.ReadAll<Flight>();
         }
     }
+
+    public class FlightMatchingController
+    {
+        public List<Flight> GetMatchingFlights(List<Flight> flights, List<string> departingFrom, List<string> travelingTo, DateOnly departureDate)
+        {
+            return flights.Where(f => 
+                (!departingFrom.Any() || departingFrom.Contains(f.From)) &&
+                (!travelingTo.Any() || travelingTo.Contains(f.To)) &&
+                f.DepartureDate == departureDate).ToList();
+        }
+    }
 }

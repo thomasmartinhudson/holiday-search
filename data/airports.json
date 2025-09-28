@@ -1,0 +1,44 @@
+[
+    {
+        "id": 1,
+        "code": "AGP",
+        "name": "Malaga Airport",
+        "city": "Malaga"
+    },
+    {
+        "id": 2,
+        "code": "LGW",
+        "name": "London Gatwick Airport",
+        "city": "London"
+    },
+    {
+        "id": 3,
+        "code": "LPA",
+        "name": "Gran Canaria Airport",
+        "city": "Las Palmas"
+    },
+    {
+        "id": 4,
+        "code": "LTN",
+        "name": "London Luton Airport",
+        "city": "London"
+    },
+    {
+        "id": 5,
+        "code": "MAN",
+        "name": "Manchester Airport",
+        "city": "Manchester"
+    },
+    {
+        "id": 6,
+        "code": "PMI",
+        "name": "Palma de Mallorca Airport",
+        "city": "Palma"
+    },
+    {
+        "id": 7,
+        "code": "TFS",
+        "name": "Tenerife South Airport",
+        "city": "Tenerife"
+    }
+]

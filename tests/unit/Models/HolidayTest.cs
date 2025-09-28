@@ -84,4 +84,49 @@ namespace HolidaySearch.Tests.Unit.Models
             Assert.Equal(350.00m, holidayResult.Hotel.Price); // 50 * 7
         }
     }
+
+    public class HolidaySearchTest
+    {
+        [Fact]
+        public void HolidaySearch_ShouldPopulateCorrectly_WithValidData()
+        {
+            // Arrange
+            var departingFrom = "MAN";
+            var travelingTo = "AGP";
+            var departureDate = new DateOnly(2023, 7, 1);
+            var duration = 7;
+
+            // Act
+            var holidaySearch = new HolidaySearch.Models.HolidaySearch
+            {
+                DepartingFrom = departingFrom,
+                TravelingTo = travelingTo,
+                DepartureDate = departureDate,
+                Duration = duration
+            };
+
+            // Assert
+            Assert.Equal(departingFrom, holidaySearch.DepartingFrom);
+            Assert.Equal(travelingTo, holidaySearch.TravelingTo);
+            Assert.Equal(departureDate, holidaySearch.DepartureDate);
+            Assert.Equal(duration, holidaySearch.Duration);
+        }
+
+        [Fact]
+        public void HolidaySearch_ShouldAllowBothNullDepartingFromAndTravelingTo()
+        {
+            // Arrange & Act
+            var holidaySearch = new HolidaySearch.Models.HolidaySearch
+            {
+                DepartingFrom = null,
+                TravelingTo = null,
+                DepartureDate = new DateOnly(2023, 7, 1),
+                Duration = 7
+            };
+
+            // Assert
+            Assert.Null(holidaySearch.DepartingFrom);
+            Assert.Null(holidaySearch.TravelingTo);
+        }
+    }
 }

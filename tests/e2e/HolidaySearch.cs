@@ -62,5 +62,114 @@ namespace HolidaySearch.Tests.E2E
                 Directory.SetCurrentDirectory(originalDirectory);
             }
         }
+
+        [Fact]
+        public void Customer2_AnyLondonToMallorca_ShouldReturnFlight6AndHotel5()
+        {
+            // Arrange - Change working directory to project root so default paths work
+            var originalDirectory = Directory.GetCurrentDirectory();
+            Directory.SetCurrentDirectory("/home/tom/Dev/holiday-search");
+
+            try
+            {
+                // Act
+                var holidaySearchView = new HolidaySearch.Views.HolidaySearch();
+                
+                var searchCriteria = new HolidaySearch.Models.HolidaySearch
+                {
+                    DepartingFrom = "London",
+                    TravelingTo = "Mallorca",
+                    DepartureDate = new DateOnly(2023, 6, 15),
+                    Duration = 10
+                };
+                
+                var results = holidaySearchView.Search(searchCriteria);
+
+                // Assert
+                Assert.NotEmpty(results);
+
+                // Get the cheapest result (first in the ordered list)
+                var result = results.First();
+
+                // Verify Flight 6
+                Assert.Equal(6, result.Flight.Id);
+                Assert.Equal("Fresh Airways", result.Flight.Airline);
+                Assert.Equal("LGW", result.Flight.From);
+                Assert.Equal("PMI", result.Flight.To);
+                Assert.Equal(75, result.Flight.Price);
+                Assert.Equal(new DateOnly(2023, 6, 15), result.Flight.DepartureDate);
+
+                // Verify Hotel 5
+                Assert.Equal(5, result.Hotel.Id);
+                Assert.Equal("Sol Katmandu Park & Resort", result.Hotel.Name);
+                Assert.Equal(new DateOnly(2023, 6, 15), result.Hotel.ArrivalDate);
+                Assert.Equal(60, result.Hotel.PricePerNight);
+                Assert.Equal(10, result.Hotel.Nights);
+                Assert.Contains("PMI", result.Hotel.LocalAirports);
+
+                // Verify total price calculation
+                var expectedTotalPrice = 75 + (60 * 10); // Flight price + (hotel price per night * nights)
+                Assert.Equal(expectedTotalPrice, result.TotalPrice);
+            }
+            finally
+            {
+                // Restore original working directory
+                Directory.SetCurrentDirectory(originalDirectory);
+            }
+        }
+
+        [Fact]
+        public void Customer3_AnyAirportToGranCanaria_ShouldReturnFlight7AndHotel6()
+        {
+            // Arrange - Change working directory to project root so default paths work
+            var originalDirectory = Directory.GetCurrentDirectory();
+            Directory.SetCurrentDirectory("/home/tom/Dev/holiday-search");
+
+            try
+            {
+                // Act
+                var holidaySearchView = new HolidaySearch.Views.HolidaySearch();
+                
+                var searchCriteria = new HolidaySearch.Models.HolidaySearch
+                {
+                    DepartingFrom = null, // Any Airport
+                    TravelingTo = "Gran Canaria",
+                    DepartureDate = new DateOnly(2022, 11, 10),
+                    Duration = 14
+                };
+                
+                var results = holidaySearchView.Search(searchCriteria);
+
+                // Assert
+                Assert.Single(results);
+
+                var result = results.First();
+
+                // Verify Flight 7
+                Assert.Equal(7, result.Flight.Id);
+                Assert.Equal("Trans American Airlines", result.Flight.Airline);
+                Assert.Equal("MAN", result.Flight.From);
+                Assert.Equal("LPA", result.Flight.To);
+                Assert.Equal(125, result.Flight.Price);
+                Assert.Equal(new DateOnly(2022, 11, 10), result.Flight.DepartureDate);
+
+                // Verify Hotel 6
+                Assert.Equal(6, result.Hotel.Id);
+                Assert.Equal("Club Maspalomas Suites and Spa", result.Hotel.Name);
+                Assert.Equal(new DateOnly(2022, 11, 10), result.Hotel.ArrivalDate);
+                Assert.Equal(75, result.Hotel.PricePerNight);
+                Assert.Equal(14, result.Hotel.Nights);
+                Assert.Contains("LPA", result.Hotel.LocalAirports);
+
+                // Verify total price calculation
+                var expectedTotalPrice = 125 + (75 * 14); // Flight price + (hotel price per night * nights)
+                Assert.Equal(expectedTotalPrice, result.TotalPrice);
+            }
+            finally
+            {
+                // Restore original working directory
+                Directory.SetCurrentDirectory(originalDirectory);
+            }
+        }
     }
 }

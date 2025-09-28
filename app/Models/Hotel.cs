@@ -42,5 +42,7 @@ namespace HolidaySearch.Models
                 _nights = value;
             }
         }
+
+        public decimal Price => PricePerNight * Nights;
     }
 }

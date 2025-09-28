@@ -1,15 +1,20 @@
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace HolidaySearch.Models
 {
     public class Hotel : BaseModel
     {
+        [JsonPropertyName("name")]
         public required string Name { get; set; }
 
+        [JsonPropertyName("arrival_date")]
         public required DateOnly ArrivalDate { get; set; }
 
         private decimal _pricePerNight;
+        
+        [JsonPropertyName("price_per_night")]
         public decimal PricePerNight
         {
             get => _pricePerNight;
@@ -21,9 +26,12 @@ namespace HolidaySearch.Models
             }
         }
 
+        [JsonPropertyName("local_airports")]
         public required List<string> LocalAirports { get; set; } = new();
 
         private int _nights;
+        
+        [JsonPropertyName("nights")]
         public int Nights
         {
             get => _nights;

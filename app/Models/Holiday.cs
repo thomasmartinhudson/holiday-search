@@ -1,5 +1,3 @@
-using HolidaySearch.Models;
-
 namespace HolidaySearch.Models
 {
     public class HolidaySearch

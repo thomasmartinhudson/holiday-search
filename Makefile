@@ -15,6 +15,10 @@ format:
 	dotnet format app/app.csproj
 	dotnet format tests/tests.csproj
 
+lint:
+	dotnet build app/app.csproj --verbosity normal
+	dotnet build tests/tests.csproj --verbosity normal
+
 docker-test:
 	docker build -t holiday-search-tests .
 	docker run --rm holiday-search-tests

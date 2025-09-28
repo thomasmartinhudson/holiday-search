@@ -1,14 +1,22 @@
 using System;
+using System.Text.Json.Serialization;
 
 namespace HolidaySearch.Models
 {
     public class Flight : BaseModel
     {
+        [JsonPropertyName("airline")]
         public required string Airline { get; set; }
+        
+        [JsonPropertyName("from")]
         public required string From { get; set; }
+        
+        [JsonPropertyName("to")]
         public required string To { get; set; }
         
         private decimal _price;
+        
+        [JsonPropertyName("price")]
         public decimal Price 
         { 
             get => _price;
@@ -20,6 +28,7 @@ namespace HolidaySearch.Models
             }
         }
         
+        [JsonPropertyName("departure_date")]
         public required DateOnly DepartureDate { get; set; }
     }
 }
